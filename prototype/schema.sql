@@ -1,0 +1,51 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS item;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS types;
+DROP TABLE IF EXISTS outfits;
+DROP TABLE IF EXISTS item_outfit;
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+
+CREATE TABLE item (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    subcategory TEXT NOT NULL,
+    brand TEXT,
+    img_path NOT NULL
+);
+
+CREATE TABLE tags (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL
+);
+
+CREATE TABLE types (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE outfits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    img_path TEXT,
+    notes TEXT
+);
+
+CREATE TABLE item_outfit (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id INTEGER NOT NULL,
+    outfit_id INTEGER NOT NULL
+);
+
+
+
