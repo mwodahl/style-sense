@@ -1,0 +1,19 @@
+#menu-card:hover {
+    background-color: #4F5D75;
+    color: #F0F6F6;
+    cursor: pointer;
+}
+
+#menu-icon:hover {
+    color: #F0F6F6;
+}
+
+#menu-card-selected {
+    background-color: #4F5D75;
+    color: #F0F6F6;
+    cursor: pointer;
+}
+
+.menu-icon-selected {
+    color: #F0F6F6;
+}
