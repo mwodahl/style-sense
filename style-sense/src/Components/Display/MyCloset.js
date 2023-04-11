@@ -21,7 +21,6 @@ function MyCloset(props) {
             top="10%"
             left="15%"
             backgroundColor="#FFFFFF"
-            zIndex="-1"
         >
             
             <View

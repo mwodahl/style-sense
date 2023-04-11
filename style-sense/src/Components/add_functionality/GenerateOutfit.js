@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, View, Flex, SelectField } from '@aws-amplify/ui-react'
 import BarLoader from "react-spinners/BarLoader";
+import { ImCancelCircle } from 'react-icons/im';
 
 
 function GenerateOutfit(props) {
@@ -28,6 +29,10 @@ function GenerateOutfit(props) {
         props.reset()
     }
 
+    function exitWindow() {
+        props.reset()
+    }
+
     return (
         props.generate === null ? (
 
@@ -40,6 +45,18 @@ function GenerateOutfit(props) {
                 backgroundColor="#FFFFFF"
                 borderRadius="10%"
             >
+                <Button
+                    position={'fixed'}
+                    top={'1'}
+                    left={'1'}
+                    border={'none'}
+                >
+                    <ImCancelCircle
+                        width={'1.5rem'}
+                        height={'1.5rem'}
+                        onClick={exitWindow} />
+                </Button>
+
                 <View
                     textAlign="center"
                     marginTop="2rem"
@@ -96,19 +113,31 @@ function GenerateOutfit(props) {
         ) : (
             <View
                 position="fixed"
-                height="100px"
-                width="100px"
+                height="fit-content"
+                width="fit-content"
                 left="40%"
                 top="30%"
                 backgroundColor="#FFFFFF"
                 borderRadius="10%">
+                <Button
+                    position={'fixed'}
+                    top={'1'}
+                    left={'1'}
+                    border={'none'}
+                >
+                    <ImCancelCircle
+                        width={'1.5rem'}
+                        height={'1.5rem'}
+                        onClick={exitWindow} />
+                </Button>
                 {
                     props.loading === true ? (
                         <BarLoader color={"#123abc"} loading={props.loading} size={150} />
                     ) : (
                         <View>
+
                             <Button
-                            onClick={goBack}
+                                onClick={goBack}
                             >
                                 Back
                             </Button>
@@ -116,12 +145,12 @@ function GenerateOutfit(props) {
                                 Outfit Generated!
                             </h3>
                             <Button
-                            onClick={invokeGenerate}
+                                onClick={invokeGenerate}
                             >
                                 New Outfit
                             </Button>
                             <Button
-                            onClick={saveOutfit}
+                                onClick={saveOutfit}
                             >
                                 Save Outfit
                             </Button>

@@ -1,28 +1,19 @@
 import React, { useEffect } from 'react';
 import { Tabs, TabItem, Card, Image, Button, View, Flex, SelectField, ScrollView } from '@aws-amplify/ui-react'
-import BarLoader from "react-spinners/BarLoader";
 import { IoAdd } from "react-icons/io5";
+import { ImCancelCircle } from 'react-icons/im';
+import { BiArrowBack } from 'react-icons/bi';
 
 
 function ManualGenerate(props) {
 
-    // function invokeGenerate() {
-    //     console.log("invoke called!")
-    //     props.setGenerateOutfit(true)
-    //     props.setLoading(true)
-    //     setTimeout(generateOutfit, 2000)
-    //     // TODO:
-    //     // generate outfit here.
-    // }
+    function goBack() {
+         props.setAddItem(false)
+    }
 
-    // function generateOutfit() {
-    //     console.log("outfit generating")
-    //     props.setLoading(false)
-    // }
-
-    // function goBack() {
-    //     props.setGenerateOutfit(null)
-    // }
+    function exitWindow() {
+        props.reset()
+    }
 
     function saveOutfit() {
         console.log("outfit saved")
@@ -46,6 +37,17 @@ function ManualGenerate(props) {
                     backgroundColor="#FFFFFF"
                     borderRadius="10%"
                 >
+                    <Button
+                        position={'fixed'}
+                        top={'1'}
+                        left={'1'}
+                        border={'none'}
+                    >
+                        <ImCancelCircle
+                            width={'1.5rem'}
+                            height={'1.5rem'}
+                            onClick={exitWindow} />
+                    </Button>
                     <View
                         textAlign="center"
                     >
@@ -109,18 +111,18 @@ function ManualGenerate(props) {
                         textAlign="center"
                     >
                         <Flex
-                        flexDirection="row"
-                        justifyContent="space-evenly"
+                            flexDirection="row"
+                            justifyContent="space-evenly"
                         >
                             <Button
                                 marginTop={"6rem"}
-                                onClick={ saveOutfit }
+                                onClick={saveOutfit}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 marginTop={"6rem"}
-                                onClick={ saveOutfit }
+                                onClick={saveOutfit}
                             >
                                 Save Outfit
                             </Button>
@@ -140,7 +142,21 @@ function ManualGenerate(props) {
                         backgroundColor="#FFFFFF"
                         borderRadius="10%"
                     >
-                        <Tabs>
+                        <Button
+                            position={'fixed'}
+                            top={'1'}
+                            left={'1'}
+                            border={'none'}
+                        >
+                            <BiArrowBack
+                                width={'1.5rem'}
+                                height={'1.5rem'}
+                                onClick={goBack} />
+                        </Button>
+                        <Tabs
+                        position={'relatiive'}
+                        marginTop = {'2rem'}
+                        >
                             <TabItem title="Shoes">
                                 {/* TODO: Map props to create cards in here that select that item onClick */}
                             </TabItem>

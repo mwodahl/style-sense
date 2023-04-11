@@ -14,6 +14,10 @@ function NavBar(props) {
     marginRight: '3rem',
   }
 
+  const menuStyle = {
+    zIndex: '99',
+  }
+
   // Show loader on signout??
 
 
@@ -25,6 +29,7 @@ function NavBar(props) {
       top="0"
       width="100%"
       backgroundColor="#F0F6F6"
+      style = {menuStyle}
     >
       <Flex
         height="100%"
@@ -76,7 +81,7 @@ function NavBar(props) {
                   {(props.User[0]).toUpperCase()}
                 </MenuButton>
               }>
-                <MenuItem onClick={props.SignOut}>Sign Out</MenuItem>
+                <MenuItem style={menuStyle} onClick={props.SignOut}>Sign Out</MenuItem>
                 <MenuItem disabled={true} onClick={() => console.log("Profile")}>Profile</MenuItem>
               </Menu>
             </Flex>
