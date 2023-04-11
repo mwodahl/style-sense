@@ -13,6 +13,7 @@ import GenerateOutfit from './Components/add_functionality/GenerateOutfit';
 import ManualGenerate from './Components/add_functionality/ManualOutfit';
 import SavedOutfits from './Components/Display/SavedOutfits';
 import MyCloset from './Components/Display/MyCloset';
+import ItemView from './Components/ItemView';
 
 function App({ signOut, user }) {
 
@@ -23,7 +24,21 @@ function App({ signOut, user }) {
   const [occasion, setOccasion] = useState("")
   const [loading, setLoading] = useState(false)
   const [imageFile, setImageFile] = useState(null)
+  // boolean for manually add items when generating an outfit
   const [manAddItem, setManAddItem] = useState(false)
+  const [item, setItem] = useState({
+    "name": null,
+    "id": null,
+    "type": null,
+    "color": null,
+    "weather": null,
+    "occasion": null,
+    "description": null
+  })
+
+  let data = require('./tmp_schema/data.json')
+
+  console.log(data.user)
 
   function resetGenerate() {
     setSelected("")
@@ -34,27 +49,50 @@ function App({ signOut, user }) {
   }
 
   async function addItem() {
-    // validate everything up here
-    // if valid then do else setError
 
-    let imgName = uuidv4()
-    console.log(imgName)
+    if (
+      // TODO:
+      // Add back in id generation here
+      imageFile !== null &&
+      item.name !== null &&
+      item.type !== null &&
+      item.color !== null &&
+      item.weather !== null &&
+      item.occasion !== null &&
+      item.description !== null
+    ) {
+      try {
+        console.log(imageFile.toString())
+        console.log(item)
 
-    try {
-      const result = await Storage.put(imageFile.name, imageFile, {
-        contentType: imageFile.type
-      })
-      console.log(result)
-    } catch (err) {
-      console.log(err)
+        // TODO:
+        // here generate image id w/ uuid
+        // let imgName = uuidv4()
+        // console.log(imgName)
+
+        const result = await Storage.put(imageFile.name, imageFile, {
+          contentType: imageFile.type
+        })
+        // TODO:
+        // Here add to database
+
+        return {
+          "success": "Item added"
+        }
+      } catch (err) {
+        console.log(err)
+        return {
+          "error": "Error adding item"
+        }
+      }
+    } else {
+      return {
+        "error": "Missing information"
+      }
     }
-    // TODO:
-    // if imageFile is null, then don't add item.
-    // if imageFile is not null, then add item.
 
-    // add to database
-
-    // update user information
+    // TODO: 
+    // update user info here...
   }
 
   function userInfo() {
@@ -62,6 +100,8 @@ function App({ signOut, user }) {
     // 2. If user not in list add user to list via POST request
     // 3. Elif user in there then grab all their info.
     // 4. Add to user object in state
+
+    // Filter data
 
   }
 
@@ -80,14 +120,17 @@ function App({ signOut, user }) {
         savedOutfits={[]}
       />
       <MyCloset
-      savedOutfits={["idfk"]}
+        savedOutfits={["something"]}
       />
+      { /* TODO: Remove this + Add appropriately after sytling */}
       {
         selected === "Add Item" ? (
           <AddItem
             setSelected={setSelected}
             setImageFile={setImageFile}
             addItem={addItem}
+            item={item}
+            setItem={setItem}
           />
         ) : (
           null

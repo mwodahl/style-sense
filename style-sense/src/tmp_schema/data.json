@@ -1,0 +1,853 @@
+{
+    "user": "marcwodahl",
+    "id": "1",
+    "clothes": [
+        {
+            "name": "Black Adidas Shoes",
+            "id": "IMG_7759.jpg",
+            "type": "Shoes",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Dude Shoes",
+            "id": "IMG_7760.jpg",
+            "type": "Shoes",
+            "color": "Grey",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "White Adidas Shoes",
+            "id": "IMG_7761.jpg",
+            "type": "Shoes",
+            "color": "White",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Snowing"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Brown Dress Shoes",
+            "id": "IMG_7762.jpg",
+            "type": "Shoes",
+            "color": "Brown",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold"
+            ],
+            "occasion": [
+                "Work",
+                "Formal"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Blue Crocs",
+            "id": "IMG_7763.jpg",
+            "type": "Shoes",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Hot"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black workout shoes",
+            "id": "IMG_7764.jpg",
+            "type": "Shoes",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold"
+            ],
+            "occasion": [
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Hoka Running Shoes",
+            "id": "IMG_7765.jpg",
+            "type": "Shoes",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "White Nike Shoes",
+            "id": "IMG_7766.jpg",
+            "type": "Shoes",
+            "color": "White",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black Converse Shoes",
+            "id": "IMG_7767.jpg",
+            "type": "Shoes",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black Shorts",
+            "id": "IMG_7744.jpg",
+            "type": "Bottoms",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot"
+            ],
+            "occasion": [
+                "Casual"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black Reebok Shorts",
+            "id": "IMG_7745.jpg",
+            "type": "Bottoms",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot"
+            ],
+            "occasion": [
+                "Casual",
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Gymshark Shorts",
+            "id": "IMG_7746.jpg",
+            "type": "Bottoms",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Hot"
+            ],
+            "occasion": [
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Blue Running Shorts",
+            "id": "IMG_7747.jpg",
+            "type": "Bottoms",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Light Jeans",
+            "id": "IMG_7749.jpg",
+            "type": "Bottoms",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Dark Jeans",
+            "id": "IMG_7750.jpg",
+            "type": "Bottoms",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Green Shorts",
+            "id": "IMG_7751.jpg",
+            "type": "Bottoms",
+            "color": "Green",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Tan Shorts",
+            "id": "IMG_7752.jpg",
+            "type": "Bottoms",
+            "color": "Tan",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black Sweatpants",
+            "id": "IMG_7753.jpg",
+            "type": "Bottoms",
+            "color": "Black",
+            "weather": [
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Green Joggers",
+            "id": "IMG_7754.jpg",
+            "type": "Bottoms",
+            "color": "Green",
+            "weather": [
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Pajama Pants",
+            "id": "IMG_7755.jpg",
+            "type": "Bottoms",
+            "color": "Grey",
+            "weather": [
+                "Overcast",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Brown Lululemon Pants",
+            "id": "IMG_7756.jpg",
+            "type": "Bottoms",
+            "color": "Brown",
+            "weather": [
+                "Sunny",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Work",
+                "Formal"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black Lululemon Pants",
+            "id": "IMG_7757.jpg",
+            "type": "Bottoms",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Work",
+                "Formal"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Tan Pants",
+            "id": "IMG_7758.jpg",
+            "type": "Bottoms",
+            "color": "Tan",
+            "weather": [
+                "Sunny",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Light Blue Shirt",
+            "id": "IMG_7770.jpg",
+            "type": "Tops",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "White Shirt",
+            "id": "IMG_7771.jpg",
+            "type": "Tops",
+            "color": "White",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Green Shirt",
+            "id": "IMG_7772.jpg",
+            "type": "Tops",
+            "color": "Green",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Orange Shirt",
+            "id": "IMG_7773.jpg",
+            "type": "Tops",
+            "color": "Orange",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black Shirt",
+            "id": "IMG_7774.jpg",
+            "type": "Tops",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Red Banff Shirt",
+            "id": "IMG_7775.jpg",
+            "type": "Tops",
+            "color": "Red",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Blue Shirt",
+            "id": "IMG_7776.jpg",
+            "type": "Tops",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Wyoming Shirt",
+            "id": "IMG_7777.jpg",
+            "type": "Tops",
+            "color": "Grey",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Red Columbia Shirt",
+            "id": "IMG_7778.jpg",
+            "type": "Tops",
+            "color": "Red",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast"
+            ],
+            "occasion": [
+                "Casual",
+                "Party",
+                "Vacation",
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "White Dress Shirt",
+            "id": "IMG_7779.jpg",
+            "type": "Tops",
+            "color": "White",
+            "weather": [
+                "Sunny",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Work",
+                "Formal"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Blue Dress Shirt",
+            "id": "IMG_7780.jpg",
+            "type": "Tops",
+            "color": "Blue",
+            "weather": [
+                "Sunny",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Work",
+                "Formal"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "White Patterned Shirt",
+            "id": "IMG_7790.jpg",
+            "type": "Tops",
+            "color": "White",
+            "weather": [
+                "Sunny",
+                "Hot"
+            ],
+            "occasion": [
+                "Casual",
+                "Party",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Orange Sweatshirt",
+            "id": "IMG_7781.jpg",
+            "type": "Jackets",
+            "color": "Orange",
+            "weather": [
+                "Overcast",
+                "Cold",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "North Face Sweatshirt",
+            "id": "IMG_7782.jpg",
+            "type": "Jackets",
+            "color": "Grey",
+            "weather": [
+                "Overcast",
+                "Cold",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Patagonia 1/4 Zip",
+            "id": "IMG_7783.jpg",
+            "type": "Jackets",
+            "color": "Grey",
+            "weather": [
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Kuhl 1/4 Zip",
+            "id": "IMG_7784.jpg",
+            "type": "Jackets",
+            "color": "Brown",
+            "weather": [
+                "Overcast",
+                "Cold"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "North Face Pullover",
+            "id": "IMG_7785.jpg",
+            "type": "Jackets",
+            "color": "Orange",
+            "weather": [
+                "Overcast",
+                "Cold",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Outdoor Research Shell",
+            "id": "IMG_7787.jpg",
+            "type": "Jackets",
+            "color": "Grey",
+            "weather": [
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Vacation",
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Champion Sweatshirt",
+            "id": "IMG_7788.jpg",
+            "type": "Jackets",
+            "color": "Pink",
+            "weather": [
+                "Overcast",
+                "Cold",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Burton Jacket",
+            "id": "IMG_7789.jpg",
+            "type": "Jackets",
+            "color": "Blue",
+            "weather": [
+                "Cold",
+                "Snowing",
+                "Windy"
+            ],
+            "occasion": [
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Nike Belt",
+            "id": "IMG_7792.jpg",
+            "type": "Accessories",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Apple Watch",
+            "id": "IMG_7793.jpg",
+            "type": "Accessories",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Party",
+                "Vacation",
+                "Sporty"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Formal Belt",
+            "id": "IMG_7794.jpg",
+            "type": "Accessories",
+            "color": "Brown",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Snowing",
+                "Rainy",
+                "Windy"
+            ],
+            "occasion": [
+                "Work",
+                "Formal"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Ray Ban Sunglasses",
+            "id": "IMG_7795.jpg",
+            "type": "Accessories",
+            "color": "Gold",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold"
+            ],
+            "occasion": [
+                "Casual",
+                "Work",
+                "Vacation"
+            ],
+            "description": "todo"
+        },
+        {
+            "name": "Black Dress Shoes",
+            "id": "IMG_7791.jpg",
+            "type": "Shoes",
+            "color": "Black",
+            "weather": [
+                "Sunny",
+                "Hot",
+                "Overcast",
+                "Cold",
+                "Windy"
+            ],
+            "occasion": [
+                "Formal"
+            ],
+            "description": "todo"
+        }
+    ],
+    "Outfits": [
+
+    ]
+}
