@@ -1,0 +1,14 @@
+{
+  "resourceName": "StyleSenseBucket",
+  "policyUUID": "7f962ee7",
+  "bucketName": "bucketexampleuser",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

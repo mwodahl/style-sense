@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from '@aws-amplify/ui-react'
-import AddWidget from './Widgets/AddWidget';
-import MyClosetWidget from './Widgets/MyClosetWidget';
+import SavedOutfits from './Display/SavedOutfits';
 
 
 function MainDisplay(props) {
@@ -26,13 +25,9 @@ function MainDisplay(props) {
             width="85%"
             bottom='0'
             right='0'
-            zIndex='-1'
             backgroundColor="#F0F6F6"
             style={containerStyle}
-        >
-            <AddWidget />
-            <MyClosetWidget />
-        </View>
+        />
     );
 }
 
