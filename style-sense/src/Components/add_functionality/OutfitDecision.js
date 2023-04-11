@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, View, Flex } from '@aws-amplify/ui-react'
+import { ImCancelCircle } from 'react-icons/im';
 
 
 function OutfitDecision(props) {
@@ -8,16 +9,31 @@ function OutfitDecision(props) {
         props.setGenerateOutfit(val)
     }
 
+    function exitWindow () {
+        props.setSelected("")
+    }
+
     return (
         <View
             position="fixed"
-            height="20%"
+            height="fit-content"
             width="15%"
             left="42.5%"
             top="40%"
             backgroundColor="#FFFFFF"
             borderRadius="10%"
         >
+            <Button
+                position={'fixed'}
+                top={'1'}
+                left={'1'}
+                border={'none'}
+            >
+                <ImCancelCircle
+                    width={'1.5rem'}
+                    height={'1.5rem'}
+                    onClick={exitWindow} />
+            </Button>
             <View
                 textAlign="center"
                 marginTop="2rem"

@@ -141,6 +141,7 @@ function App({ signOut, user }) {
           <OutfitDecision
             generate={manualGenerate}
             setGenerateOutfit={setManualGenerate}
+            setSelected={setSelected}
           />
         ) : (
           null
