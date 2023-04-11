@@ -1,0 +1,134 @@
+{
+    "users:" [
+
+    ]
+}
+{
+    "user": "user",
+    "my_closet": [
+        {
+            "name": "shirt",
+            "color": "blue",
+            "size": "medium"
+        },
+        {
+            "name": "pants",
+            "color": "blue",
+            "size": "medium"
+        },
+        {
+            "name": "shoes",
+            "color": "blue",
+            "size": "medium"
+        }
+    ],
+    "saved_outfits": [
+        {
+            "name": "outfit1",
+            "items": [
+                {
+                    "name": "shirt",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "pants",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "shoes",
+                    "color": "blue",
+                    "size": "medium"
+                }
+            ]
+        },
+        {
+            "name": "outfit2",
+            "items": [
+                {
+                    "name": "shirt",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "pants",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "shoes",
+                    "color": "blue",
+                    "size": "medium"
+                }
+            ]
+    ]
+}
+
+{
+    "user_list": [
+        {"username": "UUID"},
+        {"username": "UUID"},
+        {"username": "UUID"}
+    ]
+    "clothing_items": [
+        {
+            "owner": "UUID",
+            "name": "shirt",
+            "color": "blue",
+            "size": "medium"
+        },
+        {
+            "name": "pants",
+            "color": "blue",
+            "size": "medium"
+        },
+        {
+            "name": "shoes",
+            "color": "blue",
+            "size": "medium"
+        }
+    ],
+    "outfits": [
+        {
+            "owner": "UUID",
+            "name": "outfit1",
+            "items": [
+                {
+                    "name": "shirt",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "pants",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "shoes",
+                    "color": "blue",
+                    "size": "medium"
+                }
+            ]
+        },
+        {
+            "name": "outfit2",
+            "items": [
+                {
+                    "name": "shirt",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "pants",
+                    "color": "blue",
+                    "size": "medium"
+                },
+                {
+                    "name": "shoes",
+                    "color": "blue",
+                    "size": "medium"
+                }
+            ]
+    ]
+}
