@@ -1,5 +1,6 @@
-import React from 'react';
-import { Tabs, TabItem, View, Card, Image } from '@aws-amplify/ui-react'
+import React, {useState} from 'react';
+import { Tabs, TabItem, View, Card, Image, Divider } from '@aws-amplify/ui-react'
+import Carousel from "react-elastic-carousel";
 
 
 function MyCloset(props) {
@@ -7,6 +8,11 @@ function MyCloset(props) {
     // So....we have tabs that map to cards.
     // Also a left + right button to switch between outfitView
 
+    const [shoes, setShoes] = useState([1, 2, 3, 4]); //shoes array
+    const [bottoms, setBottoms] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+    const [tops, setTops] = useState([1, 2, 3, 4, 5, 6, 7]);
+    const [jackets, setJackets] = useState([1, 2, 3]);
+    const [accessories, setAccessories] = useState([1, 2, 3, 4, 5]);
     return (
         <View
             height="45%"
@@ -17,6 +23,7 @@ function MyCloset(props) {
             backgroundColor="#FFFFFF"
             zIndex="-1"
         >
+            
             <View
                 textAlign="center"
             >
@@ -33,11 +40,31 @@ function MyCloset(props) {
                     </View>
                     ) : (
                         <Tabs>
-                            <TabItem title="Shoes"/>
-                            <TabItem title="Bottoms"/>
-                            <TabItem title="Tops"/>
-                            <TabItem title="Jackets"/>
-                            <TabItem title="Accessories"/>
+                            <TabItem title="Shoes">
+                            <Carousel>
+                                {shoes.map(item => <View key={item}>{item}</View>)}
+                            </Carousel>
+                            </TabItem>
+                            <TabItem title="Bottoms">
+                            <Carousel>
+                                {bottoms.map(item => <View key={item}>{item}</View>)}
+                            </Carousel>
+                            </TabItem>
+                            <TabItem title="Tops">
+                            <Carousel>
+                                {tops.map(item => <View key={item}>{item}</View>)}
+                            </Carousel>
+                            </TabItem>
+                            <TabItem title="Jackets">
+                            <Carousel>
+                                {jackets.map(item => <View key={item}>{item}</View>)}
+                            </Carousel>
+                            </TabItem>
+                            <TabItem title="Accessories">
+                            <Carousel>
+                                {accessories.map(item => <View key={item}>{item}</View>)}
+                            </Carousel>
+                            </TabItem>
                         </Tabs>
             )}
 
