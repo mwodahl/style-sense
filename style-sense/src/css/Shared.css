@@ -1,0 +1,66 @@
+.background {
+    background-color: #5D4954;
+}
+
+.menuCard {
+    background-color: #F9E0D9;
+}
+
+.header {
+    color: #22223b;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+}
+
+.navHeader {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+}
+
+.profileOption {
+    color: #22223b;
+    background-color: #ffffff;
+}
+
+.profileOption :hover {
+    color: #f2e9e4;
+    background-color: #22223b;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+    position: absolute;
+    top: 0;
+    right: 10;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: #f2e9e4;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #c9ada7;
+    border-radius: 20px;
+    border: 3px solid #f2e9e4;
+}
+
+#add-button:hover {
+    background-color: #53b58a;
+    border: 1px solid green;
+    color: white;
+}
+
+#cancel-button:hover {
+    background-color: #ff6b8b;
+    border: 1px solid red;
+    color: white;
+}
+
+:root .amplify-label {
+    color: #22223b;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}

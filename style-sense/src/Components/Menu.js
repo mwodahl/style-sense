@@ -6,47 +6,43 @@ import '../css/Menu.css'
 
 
 function Menu(props) {
-
-    // create a menu component that will be used on the dashboard with aws amplify
-    // the menu will have the following options:
-    // 1. My Closet
-    // 2. Add Outfit
-    // 3. Saved Outfits
-    // 4. Generate Outfit
-
-
+    
+    // create a map of icons to be used in the menu
     const iconMap = {
-        "Add Item": (< IoAdd id={props.selected === "My Closet" ? "menu-icon-selected" : "menu-icon"}  />),
-        "Add Outfit": (< IoShirtSharp id={props.selected === "Add Outfit" ? "menu-icon-selected" : "menu-icon"} />),
+        "Add Item": (< IoAdd id="menu-icon"  />),
+        "Add Outfit": (< IoShirtSharp id="menu-icon" />),
     }
 
+    // if the selected item is the same as the item that was clicked, then set the selected item to ""
+    // else set the selected item to the item that was clicked
     function handleClick(item) {
         props.selected === item ? 
         props.setSelected("") :
         props.setSelected(item)
     }
 
+    // return the menu component
     return (
         <View
             position="fixed"
             height="90%"
             top="10%"
             width="15%"
-            backgroundColor="#F0F6F6"
+            backgroundColor="#F9E0D9"
         >
             <Flex
                 height="100%"
                 direction='column'
                 justifyContent="start"
-                gap="0.5rem"
+                gap="0rem"
             >
                 {["Add Item", "Add Outfit"].map((item) => (
                     <Card
-                        marginTop="0.5rem"
-                        borderRadius="0.5rem"
+                        paddingTop="0.5rem"
                         id={props.selected === item ? "menu-card-selected" : "menu-card"}
                         onClick={() => handleClick(item)}
                         key={item}
+                        className='menuCard'
                     >
                         <Flex
                             direction="row"
@@ -56,7 +52,9 @@ function Menu(props) {
                             {
                                 iconMap[item]
                             }
-                            <h3>{item}</h3>
+                            <h3
+                            className="text"
+                            >{item}</h3>
                         </Flex>
                     </Card>))}
             </Flex>

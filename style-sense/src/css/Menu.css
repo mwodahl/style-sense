@@ -1,19 +1,15 @@
 #menu-card:hover {
-    background-color: #4F5D75;
-    color: #F0F6F6;
+    background-color: #c9AdA7;;
     cursor: pointer;
-}
-
-#menu-icon:hover {
-    color: #F0F6F6;
 }
 
 #menu-card-selected {
-    background-color: #4F5D75;
-    color: #F0F6F6;
+    background-color: #c9ada7;
     cursor: pointer;
+    border: 1px solid #22223b;
 }
 
-.menu-icon-selected {
-    color: #F0F6F6;
+.text {
+    color: #22223b;
+    font-family: 'Montserrat', sans-serif;
 }
