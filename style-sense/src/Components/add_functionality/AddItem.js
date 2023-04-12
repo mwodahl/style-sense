@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Storage } from 'aws-amplify';
 import { Button, ScrollView, View, TextField, Flex } from '@aws-amplify/ui-react'
 import { FileUploader } from "react-drag-drop-files";
 import BarLoader from 'react-spinners/BarLoader';
 import { ImCancelCircle } from 'react-icons/im';
+import '../../css/Shared.css'
 
 
 function AddItem(props) {
@@ -60,17 +60,19 @@ function AddItem(props) {
             borderRadius="10%"
             paddingRight='2%'
             paddingLeft='2%'
+            boxShadow={'10px 10px 40px 0px #22223b'}
         >
             <Button
-            position={'fixed'}
-            top={'1'}
-            left={'1'}
-            border={'none'}
+                height='fit-content'
+                width='fit-content'
+                position={'relative'}
+                marginLeft={'0.5rem'}
+                marginTop={'1rem'}
+                border={'none'}
+                onClick={cancelItem}
+                id="cancel"
             >
-                <ImCancelCircle 
-                width={'1.5rem'}
-                height={'1.5rem'}
-                onClick={cancelItem} />
+                <ImCancelCircle size={'1.5rem'} />
             </Button>
             <Flex
                 direction="column"
@@ -80,16 +82,27 @@ function AddItem(props) {
                 marginLeft="auto"
                 marginRight="auto">
                 <View
-                    textAlign="center">
-                    <h3>
+                    textAlign="center"
+                    position="relative"
+                    marginBottom="1rem"
+                    >
+                    <h3
+                    className='header'
+                    >
                         Add Item
                     </h3>
+            </View> 
+                <View
+                position="relative"
+                marginBottom='1rem'
+                
+                >
+                <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />
                 </View>
-
-                <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />x
 
                 <TextField
                     label="Item Name"
+                    labelStyle={{ color: '#2D3142' }}
                     placeholder='Green Jacket'
                     onChange={(e) => updateValue("name", e.nativeEvent.target.value)} />
                 <TextField
@@ -173,11 +186,13 @@ function AddItem(props) {
 
             >
                 <Button
+                    id='cancel-button'
                     onClick={cancelItem}
                 >
                     Cancel
                 </Button>
                 <Button
+                    id='add-button'
                     onClick={submitItem}
                 >
                     Save

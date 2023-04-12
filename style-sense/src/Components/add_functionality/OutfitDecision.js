@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, View, Flex } from '@aws-amplify/ui-react'
 import { ImCancelCircle } from 'react-icons/im';
+import '../../css/Shared.css'
 
 
 function OutfitDecision(props) {
@@ -9,7 +10,7 @@ function OutfitDecision(props) {
         props.setGenerateOutfit(val)
     }
 
-    function exitWindow () {
+    function exitWindow() {
         props.setSelected("")
     }
 
@@ -21,25 +22,30 @@ function OutfitDecision(props) {
             left="42.5%"
             top="40%"
             backgroundColor="#FFFFFF"
-            borderRadius="10%"
+            borderRadius="5%"
+            boxShadow={'10px 10px 40px 0px #22223b'}
         >
             <Button
-                position={'fixed'}
-                top={'1'}
-                left={'1'}
+                position={'relative'}
+                marginLeft={'0.5rem'}
+                marginTop={'0.5rem'}
+                padding='0.5rem'
                 border={'none'}
+                onClick={exitWindow}
             >
                 <ImCancelCircle
-                    width={'1.5rem'}
-                    height={'1.5rem'}
+                    size={'1.5rem'}
                     onClick={exitWindow} />
             </Button>
             <View
                 textAlign="center"
-                marginTop="2rem"
+                position="relative"
+                marginTop="-0.5rem"
             >
-                <h3>
-                    Manually Generate Outfit?
+                <h3
+                    className='header'
+                >
+                    Generate Outfit?
                 </h3>
             </View>
             <Flex
@@ -48,15 +54,18 @@ function OutfitDecision(props) {
                 position="relative"
                 direction="row"
                 justifyContent="space-evenly"
-                marginTop="5rem"
+                marginTop="2rem"
+                marginBottom="2rem"
             >
                 <Button
-                    onClick={() => handleClick(false)}
+                    id="cancel-button"
+                    onClick={() => handleClick(true)}
                 >
                     No
                 </Button>
                 <Button
-                    onClick={() => handleClick(true)}
+                    id="add-button"
+                    onClick={() => handleClick(false)}
                 >
                     Yes
                 </Button>

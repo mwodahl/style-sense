@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Card, Flex, Menu, MenuItem, MenuButton } from '@aws-amplify/ui-react'
-
+import '../css/Shared.css'
 
 function NavBar(props) {
 
@@ -14,13 +14,14 @@ function NavBar(props) {
     marginRight: '3rem',
   }
 
-  const menuStyle = {
+  const viewStyle = {
     zIndex: '99',
   }
 
-  // Show loader on signout??
-
-
+  const menuStyle = {
+    border: '1px solid #22223b',
+    borderRadius: '5px'
+  }
 
   return (
     <View
@@ -28,45 +29,49 @@ function NavBar(props) {
       height="10%"
       top="0"
       width="100%"
-      backgroundColor="#F0F6F6"
-      style = {menuStyle}
+      style = {viewStyle}
     >
       <Flex
         height="100%"
         width="100%"
         direction='row'
-        justifyContent="space-evenly"
+        gap='0rem'
       >
         <Card
             height="100%"
             width="calc(100% / 3)"
-            borderRadius="0.5rem"
+            className='background'
           >
             <Flex
               direction="row"
               justifyContent="flex-start"
               alignItems="center"
             >
-              <h3>StyleSense Logo</h3>
+              <h3
+              className='navHeader'>
+                StyleSense Logo
+                </h3>
             </Flex>
           </Card>
           <Card
             height="100%"
             width="calc(100% / 3)"
-            borderRadius="0.5rem"
+            className='background'
           >
             <Flex
               direction="row"
               justifyContent="center"
               alignItems="center"
             >
-              <h3>Weather Info?</h3>
+              <h3
+              className='navHeader'
+              >Weather Info?</h3>
             </Flex>
           </Card>
           <Card
             height="100%"
             width="calc(100% / 3)"
-            borderRadius="0.5rem"
+            className='background'
           >
             <Flex
               direction="row"
@@ -75,14 +80,15 @@ function NavBar(props) {
             >
               <Menu
               menuAlign='end'
+              style={menuStyle}
               trigger={
                 <MenuButton
                 style={profileStyle}>
                   {(props.User[0]).toUpperCase()}
                 </MenuButton>
               }>
-                <MenuItem style={menuStyle} onClick={props.SignOut}>Sign Out</MenuItem>
-                <MenuItem disabled={true} onClick={() => console.log("Profile")}>Profile</MenuItem>
+                <MenuItem className='profileOption' onClick={props.SignOut}>Sign Out</MenuItem>
+                <MenuItem className='profileOption' disabled={true} onClick={() => console.log("Profile")}>Profile</MenuItem>
               </Menu>
             </Flex>
           </Card>

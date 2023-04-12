@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import '@aws-amplify/ui-react/styles.css'
 import NavBar from './Components/NavBar';
 import Menu from './Components/Menu'
-import MainDisplay from './Components/MainDisplay'
 import AddItem from './Components/add_functionality/AddItem';
 import OutfitDecision from './Components/add_functionality/OutfitDecision';
 import { useState } from 'react';
@@ -37,8 +36,6 @@ function App({ signOut, user }) {
   })
 
   let data = require('./tmp_schema/data.json')
-
-  console.log(data.user)
 
   function resetGenerate() {
     setSelected("")
@@ -115,7 +112,6 @@ function App({ signOut, user }) {
         selected={selected}
         setSelected={setSelected}
       />
-      <MainDisplay />
       <SavedOutfits
         savedOutfits={[]}
       />
