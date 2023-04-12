@@ -8,7 +8,7 @@ function NavBar(props) {
     color: '#F0F6F6',
     borderRadius: '50%',
     border: '1px solid #F0F6F6',
-    backgroundColor: '#2D3142',
+    backgroundColor: '#22223b',
     width: '3rem',
     height: '3rem',
     marginRight: '3rem',
@@ -32,6 +32,7 @@ function NavBar(props) {
       style = {viewStyle}
     >
       <Flex
+        className='background'
         height="100%"
         width="100%"
         direction='row'

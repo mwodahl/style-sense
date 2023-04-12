@@ -1,45 +1,44 @@
 import React, { useState } from 'react';
-import { Storage } from 'aws-amplify';
 import { Button, ScrollView, View, TextField, Flex, Image } from '@aws-amplify/ui-react'
 import { FileUploader } from "react-drag-drop-files";
 import BarLoader from 'react-spinners/BarLoader';
 import { ImCancelCircle } from 'react-icons/im';
+import '../css/Shared.css'
 
 
 function ItemView(props) {
-
-    // TODO:
-    // Make sure props align. Modify to Show image + default to prop values
-    // Styling. 
-
+    
     let bucket = require('../env.json')
-
     const bucketURI = bucket.REACT_APP_BUCKET_URL + props.clothingItem.id
-    console.log(bucketURI)
-
+    const fileTypes = ["JPG", "PNG", "JPEG"]
+    
+    const [del, setDel] = useState(false)
     const [result, setResult] = useState({})
     const [loading, setLoading] = useState(false)
-
-    const fileTypes = [
-        "JPG", "PNG", "JPEG"
-    ]
 
     const handleFile = (file) => {
         props.setImageFile(file)
     }
 
-    function cancelItem() {
-        props.setSelected("")
-        props.setImageFile(null)
-        props.setItem({
-            "name": null,
-            "id": null,
-            "type": null,
-            "color": null,
-            "weather": null,
-            "occasion": null,
-            "description": null
-        })
+    function deleteItem() {
+        if (del) {
+            console.log("delete")
+            props.setImageFile(null)
+            props.setItem({
+                "name": null,
+                "id": null,
+                "type": null,
+                "color": null,
+                "weather": null,
+                "occasion": null,
+                "description": null
+            })
+            props.setItemView(null)
+            // TODO:
+            // Call props + delete item from database + storage
+        } else {
+            setDel(true)
+        }
     }
 
     function updateValue(type, value) {
@@ -50,9 +49,26 @@ function ItemView(props) {
 
     async function submitItem() {
         setLoading(true)
-        const res = await props.addItem()
+        
+        // TODO: Create an update clothing function in props
+        // await that instead of addItem
+
         setLoading(false)
-        setResult(res)
+        setResult("")
+    }
+
+    function exitWindow() {
+        props.setImageFile(null)
+        props.setItem({
+            "name": null,
+            "id": null,
+            "type": null,
+            "color": null,
+            "weather": null,
+            "occasion": null,
+            "description": null
+        })
+        props.setItemView(null)
     }
 
     return (
@@ -66,17 +82,18 @@ function ItemView(props) {
             borderRadius="10%"
             paddingRight='2%'
             paddingLeft='2%'
+            boxShadow={'10px 10px 40px 0px #22223b'}
         >
             <Button
-                position={'fixed'}
-                top={'1'}
-                left={'1'}
+                height='fit-content'
+                width='fit-content'
+                position={'relative'}
+                marginLeft={'0.5rem'}
+                marginTop={'1rem'}
                 border={'none'}
+                onClick={exitWindow}
             >
-                <ImCancelCircle
-                    width={'1.5rem'}
-                    height={'1.5rem'}
-                    onClick={cancelItem} />
+                <ImCancelCircle size={'1.5rem'} />
             </Button>
             <Flex
                 direction="column"
@@ -86,17 +103,22 @@ function ItemView(props) {
                 marginLeft="auto"
                 marginRight="auto">
                 <View
-                    textAlign="center">
-                    <h3>
-                        { props.clothingItem.name }
+                    textAlign="center"
+                    position="relative"
+                    marginBottom="1rem"
+                >
+                    <h3
+                        className='header'
+                    >
+                        {props.clothingItem.name}
                     </h3>
                 </View>
-
-                { /* TODO: lowkey fine though. */}
                 <View
-                position= "relative"
-                width="100%"
-                height="fit-content"
+                    position="relative"
+                    width="fit-content"
+                    height="fit-content"
+                    marginLeft="auto"
+                    marginRight="auto"
                 >
                     <Image
                         src={bucketURI}
@@ -105,7 +127,13 @@ function ItemView(props) {
                     />
                 </View>
 
-                <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />
+                <View
+                    position="relative"
+                    marginBottom="1rem"
+                    marginTop="1rem"
+                >
+                    <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />
+                </View>
 
                 <TextField
                     label="Item Name"
@@ -192,16 +220,61 @@ function ItemView(props) {
 
             >
                 <Button
-                    onClick={cancelItem}
+                    onClick={deleteItem}
+                    id='cancel-button'
                 >
-                    Cancel
+                    Delete
                 </Button>
                 <Button
                     onClick={submitItem}
+                    id='add-button'
                 >
                     Save
                 </Button>
             </Flex>
+
+            {
+                del === true ? (
+                    <View
+                        textAlign="center"
+                    >
+                        <h5
+                            style= {{color: 'darkred', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold'}}
+                        >
+                            This operation will delete this item from your closet and cannot be undone.
+                            Would you like to proceed?
+                        </h5>
+                        <Flex
+                            position={"relative"}
+                            width="90%"
+                            height="fit-content"
+                            direction="row"
+                            justifyContent="space-evenly"
+                            alignItems="center"
+                            marginLeft={"auto"}
+                            marginRight={"auto"}
+                            marginBottom={"1.5rem"}
+
+                        >
+                            <Button
+                                id='cancel-button'
+                                onClick={() => setDel(false) }
+                            >
+                                No
+                            </Button>
+                            <Button
+                                id='add-button'
+                                onClick={deleteItem}
+                            >
+                                Yes
+                            </Button>
+                        </Flex>
+                    </View>
+                )
+                    : (
+                        null
+                    )
+            }
 
         </ScrollView>
     )

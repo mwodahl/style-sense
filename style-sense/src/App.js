@@ -34,6 +34,7 @@ function App({ signOut, user }) {
     "occasion": null,
     "description": null
   })
+  const [itemView, setItemView] = useState(null)
 
   let data = require('./tmp_schema/data.json')
 
@@ -116,9 +117,23 @@ function App({ signOut, user }) {
         savedOutfits={[]}
       />
       <MyCloset
-        savedOutfits={["something"]}
+        clothes={["something"]}
+        setItemView={setItemView}
       />
-      { /* TODO: Remove this + Add appropriately after sytling */}
+      {
+        itemView !== null ? (
+          <ItemView
+          clothingItem={itemView}
+          setImageFile={setImageFile}
+          setSelected={setSelected}
+          setItem={setItem}
+          item={item}
+          setItemView={setItemView}
+          addItem={addItem}/>
+        ) : (
+          null
+        )
+      }
       {
         selected === "Add Item" ? (
           <AddItem

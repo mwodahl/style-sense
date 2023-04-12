@@ -64,7 +64,7 @@ function GenerateOutfit(props) {
                     marginTop="2rem"
                 >
                     <h3
-                    className="header"
+                        className="header"
                     >
                         Please Select Parameters:
                     </h3>
@@ -127,67 +127,89 @@ function GenerateOutfit(props) {
                 borderRadius='10px'
                 boxShadow={'10px 10px 40px 0px #22223b'}
             >
-                <Button
-                    height='fit-content'
-                    width='fit-content'
-                    position={'relative'}
-                    marginLeft={'0.5rem'}
-                    padding='0.5rem'
-                    border={'none'}
-                >
-                    <ImCancelCircle
-                        size={'1.5rem'}
-                        onClick={exitWindow} />
-                </Button>
                 {
                     props.loading === true ? (
                         <View
-                        display='relative'
-                        width='95%'
-                        marginLeft='auto'
-                        marginRight={'auto'}
+                            display='relative'
+                            width='95%'
+                            marginLeft='auto'
+                            marginRight={'auto'}
                         >
-                        <BarLoader color={"#4a4e69"} loading={props.loading} width={'100%'} height={'20px'} />
+                            <Button
+                                height='fit-content'
+                                width='fit-content'
+                                position={'relative'}
+                                marginLeft={'0.5rem'}
+                                padding='0.5rem'
+                                border={'none'}
+                            >
+                                <ImCancelCircle
+                                    size={'1.5rem'}
+                                    onClick={goBack} />
+                            </Button>
+
+                            <BarLoader color={"#4a4e69"} loading={props.loading} width={'100%'} height={'20px'} />
                         </View>
                     ) : (
-                        <View
-                        textAlign="center"
-                        >
-                            <h3
-                            className='header'
-                            display='relative'
-                            marginTop='-0.5rem'
+                        <View>
+                            <View
+                                display='relative'
+                                width='100%'
+                                marginLeft='auto'
+                                marginRight={'auto'}
                             >
-                                Outfit Generated!
-                            </h3>
-                            {
-                                /* Note
-                                * This is where the outfit will be generated.
-                                * So map the outfit here...
-                                * Display images...
-                                * With tabs?
-                                * Or perhaps just a vertical ScrollView
-                                */
-                            }
+                                <Button
+                                    height='fit-content'
+                                    width='fit-content'
+                                    position={'relative'}
+                                    marginLeft={'0.5rem'}
+                                    padding='0.5rem'
+                                    border={'none'}
+                                >
+                                    <ImCancelCircle
+                                        size={'1.5rem'}
+                                        onClick={goBack} />
+                                </Button>
+                            </View>
+                            <View
+                                textAlign="center"
+                            >
+                                <h3
+                                    className='header'
+                                    display='relative'
+                                    marginTop='-0.5rem'
+                                >
+                                    Outfit Generated!
+                                </h3>
+                                {
+                                    /* Note
+                                    * This is where the outfit will be generated.
+                                    * So map the outfit here...
+                                    * Display images...
+                                    * With tabs?
+                                    * Or perhaps just a vertical ScrollView
+                                    */
+                                }
 
-                            <Flex
-                                direction={'row'}
-                                justifyContent={'space-between'}
-                                alignItems={'center'}
-                            >
-                                <Button
-                                    id="cancel-button"
-                                    onClick={invokeGenerate}
+                                <Flex
+                                    direction={'row'}
+                                    justifyContent={'space-between'}
+                                    alignItems={'center'}
                                 >
-                                    New Outfit
-                                </Button>
-                                <Button
-                                    id="add-button"
-                                    onClick={saveOutfit}
-                                >
-                                    Save Outfit
-                                </Button>
-                            </Flex>
+                                    <Button
+                                        id="cancel-button"
+                                        onClick={invokeGenerate}
+                                    >
+                                        New Outfit
+                                    </Button>
+                                    <Button
+                                        id="add-button"
+                                        onClick={saveOutfit}
+                                    >
+                                        Save Outfit
+                                    </Button>
+                                </Flex>
+                            </View>
                         </View>
                     )
                 }
