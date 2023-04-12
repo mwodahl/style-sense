@@ -12,6 +12,18 @@
     font-weight: bolder;
 }
 
+.error {
+    color: red;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+}
+
+.success {
+    color: green;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+}
+
 .navHeader {
     color: white;
     font-family: 'Montserrat', sans-serif;

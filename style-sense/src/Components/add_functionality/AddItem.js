@@ -138,13 +138,17 @@ function AddItem(props) {
             >
                 {
                     result.success !== undefined ? (
-                        <h3>
+                        <h3
+                        className='success'
+                        >
                             {result.success}
                         </h3>
                     ) : (
                         result.error !== undefined ? (
-                            <h3>
-                                {result.error}
+                            <h3
+                            className='error'
+                            >
+                               Error: {result.error}
                             </h3>
                         ) : (
                             null
