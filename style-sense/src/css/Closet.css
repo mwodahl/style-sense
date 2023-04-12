@@ -35,14 +35,16 @@
 }
 
 button.rec-dot {
-    background-color: none;
-    box-shadow: 0 0 1px 3px #5D4954;
+    visibility: hidden;
+    /* background-color: none;
+    box-shadow: 0 0 1px 3px #5D4954; */
 }
 
 button.rec-dot_active {
-    outline: none;
+    visibility: hidden;
+    /* outline: none;
     background-color: #c9ada7;
-    box-shadow: 0 0 1px 3px #5D4954;
+    box-shadow: 0 0 1px 3px #5D4954; */
 }
 
 button.rec-dot:focus:enabled {

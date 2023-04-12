@@ -78,12 +78,41 @@
 }
 
 #clothingCard {
+    height: fit-content;
+    width: fit-content;
     border-radius: 5px;
     background-color: #f2e9e4;
-    padding: 1rem;
-    box-shadow: 5px 5px 20px 0px #22223b;
+    box-shadow: 5px 5px 10px 0px #22223b;
+    margin: 1rem;
+    margin-top: 2rem;
 }
 
 #clothingCard :hover {
     cursor: pointer;
+}
+
+.responsive {
+    width: 200px;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive {
+        width: 40px;
+        padding: 2px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .responsive {
+        width: 70px;
+        padding: 3.5px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .responsive {
+        width: 100px;
+        padding: 4px;
+    }
 }

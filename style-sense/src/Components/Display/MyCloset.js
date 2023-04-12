@@ -1,24 +1,40 @@
 import React, { useState } from 'react';
-import { Tabs, TabItem, View, Image } from '@aws-amplify/ui-react'
+import { Tabs, TabItem, View, Card, Image } from '@aws-amplify/ui-react'
 import Carousel from "react-elastic-carousel";
 import '../../css/Closet.css';
+import '../../css/Shared.css'
 
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 600, itemsToShow: 2 },
     { width: 900, itemsToShow: 3 },
-    { width: 1050, itemsToShow: 7 },
-    { width: 1200, itemsToShow: 8 },
+    { width: 1050, itemsToShow: 4 },
+    { width: 1200, itemsToShow: 5 },
 ];
 
 function MyCloset(props) {
 
-    // So....we have tabs that map to cards.
-    // Also a left + right button to switch between outfitView
+    let bucket = require('../../env.json')
+    const data = require('../../tmp_schema/data.json')
+
+    // TODO:
+    // Get rid of this after pulling in data
+    const shoes = [
+        data.clothes[0],
+        data.clothes[1],
+        data.clothes[2],
+        data.clothes[3],
+        data.clothes[4],
+        data.clothes[5],
+        data.clothes[6]
+    ]
+
+    const setView = (index) => {
+        console.log('setView called...')
+        props.setItemView(data.clothes[index])
+    }
 
     // Placeholders
-    const [shoes, setShoes] = useState([1, 2, 3, 4]);
-    const [bottoms, setBottoms] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
     const [tops, setTops] = useState([1, 2, 3, 4, 5, 6, 7]);
     const [jackets, setJackets] = useState([1, 2, 3]);
     const [accessories, setAccessories] = useState([1, 2, 3, 4, 5]);
@@ -33,49 +49,112 @@ function MyCloset(props) {
         >
 
             <View
+                display="relative"
                 textAlign="center"
             >
-                <h3>
+                <h2
+                    className='header'
+                >
                     My Closet
-                </h3>
+                </h2>
             </View>
-            {
-                props.savedOutfits.length === 0 ?
-                    (<View
-                        textAlign="center"
-                    >
-                        <h3> No Items </h3>
-                    </View>
-                    ) : (
-                        <Tabs>
-                            <TabItem title="Shoes">
+            <View
+                position="relative"
+                width="90%"
+                marginLeft="auto"
+                marginRight="auto"
+                height=""
+            >
+                <Tabs>
+                    <TabItem title="Shoes">
+                        {
+                            props.clothes.length === 0 ? (
+                                <View
+                                    textAlign="center"
+                                >
+                                    <h3> Select 'Add Item' to add an item to your closet </h3>
+                                </View>
+                            ) : (
                                 <Carousel breakPoints={breakPoints}>
-                                    {shoes.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
+                                    {
+                                        /* 
+                                        * So in here we're going to map props.shoes
+                                        * to a card with an image. Card should have a slight box shadow.
+                                        * TODO:
+                                        * Replace with props.shoes (or filter in this component)
+                                        */
+                                        shoes.map((item, index) => (
+                                            <Card
+                                                id="clothingCard"
+                                                key={index}
+                                                onClick={() => setView(index)}
+                                            >
+                                                <Image
+                                                    className='responsive'
+                                                    src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                />
+                                            </Card>
+                                        ))
+                                    }
                                 </Carousel>
-                            </TabItem>
-                            <TabItem title="Bottoms">
+                            )
+                        }
+                    </TabItem>
+                    <TabItem title="Bottoms">
+                        {
+                            [].length === 0 ? (
+                                <View
+                                    textAlign="center"
+                                    position="relative"
+                                    marginTop="5rem"
+                                >
+                                    <h3
+                                    className='header'
+                                    > Select 'Add Item' to add an item to your closet </h3>
+                                </View>
+                            ) : (
                                 <Carousel breakPoints={breakPoints}>
-                                    {bottoms.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
+                                    {
+                                        /* 
+                                        * So in here we're going to map props.shoes
+                                        * to a card with an image. Card should have a slight box shadow.
+                                        * TODO:
+                                        * Replace with props.shoes (or filter in this component)
+                                        */
+                                        [].map((item, index) => (
+                                            <Card
+                                                id="clothingCard"
+                                                key={index}
+                                                onClick={() => setView(index)}
+                                            >
+                                                <Image
+                                                    className='responsive'
+                                                    src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                />
+                                            </Card>
+                                        ))
+                                    }
                                 </Carousel>
-                            </TabItem>
-                            <TabItem title="Tops">
-                                <Carousel breakPoints={breakPoints}>
-                                    {tops.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
-                                </Carousel>
-                            </TabItem>
-                            <TabItem title="Jackets">
-                                <Carousel breakPoints={breakPoints}>
-                                    {jackets.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
-                                </Carousel>
-                            </TabItem>
-                            <TabItem title="Accessories">
-                                <Carousel breakPoints={breakPoints}>
-                                    {accessories.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
-                                </Carousel>
-                            </TabItem>
-                        </Tabs>
-                    )}
-
+                            )
+                        }
+                    </TabItem>
+                    <TabItem title="Tops">
+                        <Carousel breakPoints={breakPoints}>
+                            {tops.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
+                        </Carousel>
+                    </TabItem>
+                    <TabItem title="Jackets">
+                        <Carousel breakPoints={breakPoints}>
+                            {jackets.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
+                        </Carousel>
+                    </TabItem>
+                    <TabItem title="Accessories">
+                        <Carousel breakPoints={breakPoints}>
+                            {accessories.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
+                        </Carousel>
+                    </TabItem>
+                </Tabs>
+            </View>
         </View>
     )
 }
