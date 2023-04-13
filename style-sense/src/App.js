@@ -84,7 +84,6 @@ function App({ signOut, user }) {
             weather: item.weather.split(",")
           }
         }));
-
         
 
         // TODO:
