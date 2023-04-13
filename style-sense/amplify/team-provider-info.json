@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "stylesenseb2c41190": {}
+        "stylesenseb2c41190": {},
+        "stylesensede885d2a": {}
       },
       "storage": {
         "StyleSenseBucket": {}

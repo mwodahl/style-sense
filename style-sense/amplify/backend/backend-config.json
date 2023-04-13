@@ -1,15 +1,23 @@
 {
   "api": {
     "stylesense": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "stylesensede885d2a"
+        }
+      ],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
-            },
-            "authenticationType": "API_KEY"
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authstylesensede885d2a"
+            }
           }
         }
       },
@@ -18,7 +26,7 @@
     }
   },
   "auth": {
-    "stylesenseb2c41190": {
+    "stylesensede885d2a": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -43,11 +51,5 @@
       "service": "Cognito"
     }
   },
-  "storage": {
-    "StyleSenseBucket": {
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "S3"
-    }
-  }
+  "storage": {}
 }
