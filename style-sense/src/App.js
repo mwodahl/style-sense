@@ -1,6 +1,6 @@
 import React from 'react';
 import { withAuthenticator } from '@aws-amplify/ui-react'
-import { Storage } from 'aws-amplify';
+import { Storage, API } from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
 import '@aws-amplify/ui-react/styles.css'
 import NavBar from './Components/NavBar';
@@ -13,6 +13,9 @@ import ManualGenerate from './Components/add_functionality/ManualOutfit';
 import SavedOutfits from './Components/Display/SavedOutfits';
 import MyCloset from './Components/Display/MyCloset';
 import ItemView from './Components/ItemView';
+import { graphqlOperation } from 'aws-amplify';
+import { createClothing, deleteClothing, deleteOutfit, updateClothing, createOutfitItem } from './graphql/mutations';
+import { listClothing } from './graphql/queries';
 
 function App({ signOut, user }) {
 
@@ -71,9 +74,22 @@ function App({ signOut, user }) {
         const result = await Storage.put(imageFile.name, imageFile, {
           contentType: imageFile.type
         })
+        await API.graphql(graphqlOperation(createClothing, {
+          input: {
+            name: item.name,
+            type: item.type,
+            color: item.color,
+            description: item.description,
+            occasion: item.occasion.split(","),
+            weather: item.weather.split(",")
+          }
+        }));
+
+        
+
         // TODO:
         // Here add to database
-
+        console.log(user.username)
         return {
           "success": "Item added"
         }
@@ -93,14 +109,82 @@ function App({ signOut, user }) {
     // update user info here...
   }
 
-  function userInfo() {
-    // 1. Grab user list
-    // 2. If user not in list add user to list via POST request
-    // 3. Elif user in there then grab all their info.
-    // 4. Add to user object in state
+  async function deleteItem() {
+    //remove on id
+    const deletedItem = await API.graphql({
+      query: deleteClothing,
+      variables: {
+        input: {
+          id: "YOUR_RECORD_ID"
+        }
+      }
+    });
+    //remove image
+    await Storage.remove("name");
+  }
 
-    // Filter data
+  async function updateOutfitItem() {
+    //make sure you have the id
+    await API.graphql(graphqlOperation(updateClothing, {
+      input: {
+        id: "ADD ID HERE",
+        name: item.name,
+        type: item.type,
+        color: item.color,
+        description: item.description,
+        occasion: item.occasion.split(","),
+        weather: item.weather.split(",")
+      }
+    }));
+    //everything but storage
+    // TODO: Update image
+  }
 
+  async function onLogin() {
+    //query all clothes
+    //seperate by type (top, bottom, jacket)
+    const vars = {
+      filter: {
+        type: {
+          eq: "Shirt"
+        }
+      }
+    }
+    const res = await API.graphql({
+      query: listClothing,
+      variables: vars
+    });
+    console.log(res)
+  }
+
+  async function createOutfit() {
+    //Creates the outfit
+    const outfit = await API.graphql(graphqlOperation(createOutfit, {
+      input: {
+        name: "My First Fit!"
+      }
+    }));
+
+    // Must do this for every clothing item (maybe for loop for each clothing item) 
+    await API.graphql(graphqlOperation(createOutfitItem, {
+      input: {
+        clothingId: "ID",
+        outfitId: outfit.data.createOutfit.id
+      }
+    }));
+  }
+
+
+
+  async function deleteOutfit() {
+    const deletedItem = await API.graphql({
+      query: deleteOutfit,
+      variables: {
+        input: {
+          id: "YOUR_RECORD_ID"
+        }
+      }
+    });
   }
 
   return (
@@ -123,13 +207,13 @@ function App({ signOut, user }) {
       {
         itemView !== null ? (
           <ItemView
-          clothingItem={itemView}
-          setImageFile={setImageFile}
-          setSelected={setSelected}
-          setItem={setItem}
-          item={item}
-          setItemView={setItemView}
-          addItem={addItem}/>
+            clothingItem={itemView}
+            setImageFile={setImageFile}
+            setSelected={setSelected}
+            setItem={setItem}
+            item={item}
+            setItemView={setItemView}
+            addItem={addItem} />
         ) : (
           null
         )

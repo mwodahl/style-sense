@@ -30,7 +30,7 @@ function MyCloset(props) {
     ]
 
     const setView = (index) => {
-        console.log('setView called...')
+        console.log('setView called...' + index)
         props.setItemView(data.clothes[index])
     }
 

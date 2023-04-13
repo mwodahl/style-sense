@@ -7,7 +7,7 @@
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "stylesensede885d2a"
+          "resourceName": "stylesense86406841"
         }
       ],
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authstylesensede885d2a"
+              "userPoolId": "authstylesense86406841"
             }
           }
         }
@@ -26,7 +26,7 @@
     }
   },
   "auth": {
-    "stylesensede885d2a": {
+    "stylesense86406841": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -51,5 +51,11 @@
       "service": "Cognito"
     }
   },
-  "storage": {}
+  "storage": {
+    "s370cf5425": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    }
+  }
 }

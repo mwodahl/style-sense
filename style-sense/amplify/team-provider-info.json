@@ -14,10 +14,12 @@
     "categories": {
       "auth": {
         "stylesenseb2c41190": {},
-        "stylesensede885d2a": {}
+        "stylesensede885d2a": {},
+        "stylesense86406841": {}
       },
       "storage": {
-        "StyleSenseBucket": {}
+        "StyleSenseBucket": {},
+        "s370cf5425": {}
       }
     }
   }
