@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ScrollView, View, TextField, Flex } from '@aws-amplify/ui-react'
+import { Button, ScrollView, View, TextField, Flex, SelectField } from '@aws-amplify/ui-react'
 import { FileUploader } from "react-drag-drop-files";
 import BarLoader from 'react-spinners/BarLoader';
 import { ImCancelCircle } from 'react-icons/im';
@@ -85,19 +85,19 @@ function AddItem(props) {
                     textAlign="center"
                     position="relative"
                     marginBottom="1rem"
-                    >
+                >
                     <h3
-                    className='header'
+                        className='header'
                     >
                         Add Item
                     </h3>
-            </View> 
+                </View>
                 <View
-                position="relative"
-                marginBottom='1rem'
-                
+                    position="relative"
+                    marginBottom='1rem'
+
                 >
-                <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />
+                    <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />
                 </View>
 
                 <TextField
@@ -105,10 +105,16 @@ function AddItem(props) {
                     labelStyle={{ color: '#2D3142' }}
                     placeholder='Green Jacket'
                     onChange={(e) => updateValue("name", e.nativeEvent.target.value)} />
-                <TextField
+                <SelectField
                     label="Type"
-                    placeholder='Jacket'
-                    onChange={(e) => updateValue("type", e.nativeEvent.target.value)} />
+                    onChange={(e) => updateValue("type", e.nativeEvent.target.value)}
+                >
+                    <option value="Shoes">Shoes</option>
+                    <option value="Bottoms">Bottoms</option>
+                    <option value="Tops">Tops</option>
+                    <option value="Outerwear">Outerwear</option>
+                    <option value="Accessories">Accessories</option>
+                </SelectField>
                 <TextField
                     label="Color"
                     placeholder='Green'
@@ -139,16 +145,16 @@ function AddItem(props) {
                 {
                     result.success !== undefined ? (
                         <h3
-                        className='success'
+                            className='success'
                         >
                             {result.success}
                         </h3>
                     ) : (
                         result.error !== undefined ? (
                             <h3
-                            className='error'
+                                className='error'
                             >
-                               Error: {result.error}
+                                Error: {result.error}
                             </h3>
                         ) : (
                             null

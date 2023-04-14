@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ScrollView, View, TextField, Flex, Image } from '@aws-amplify/ui-react'
+import { Button, ScrollView, View, TextField, Flex, Image, SelectField } from '@aws-amplify/ui-react'
 import { FileUploader } from "react-drag-drop-files";
 import BarLoader from 'react-spinners/BarLoader';
 import { ImCancelCircle } from 'react-icons/im';
@@ -179,16 +179,19 @@ function ItemView(props) {
                         </Button>
                     }
                     onChange={(e) => updateValue("name", e.nativeEvent.target.value)} />
-                <TextField
+                    
+
+                <SelectField
                     label="Type"
-                    value={itemEdit["type"] === false ? props.clothingItem.type : null}
-                    placeholder={itemEdit["type"] === true ? props.clothingItem.type : null}
-                    innerEndComponent={
-                        <Button>
-                                <AiOutlineEdit size={'1.5rem'} />
-                        </Button>
-                    }
-                    onChange={(e) => updateValue("type", e.nativeEvent.target.value)} />
+                    onChange={(e) => updateValue("type", e.nativeEvent.target.value)}
+                    value = {props.clothingItem.type}
+                >
+                    <option value="Shoes">Shoes</option>
+                    <option value="Bottoms">Bottoms</option>
+                    <option value="Tops">Tops</option>
+                    <option value="Outerwear">Outerwear</option>
+                    <option value="Accessories">Accessories</option>
+                </SelectField>
                 <TextField
                     label="Color"
                     value={itemEdit["color"] === false ? props.clothingItem.color : null}
