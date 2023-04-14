@@ -39,7 +39,16 @@ function App({ signOut, user }) {
   })
   const [itemView, setItemView] = useState(null)
 
-  let data = require('./tmp_schema/data.json')
+  // state for clothing/outfit list
+  const [userInfo, setUserInfo] = useState(false)
+
+  // state for outfit items
+  const [shoes, setShoes] = useState([])
+  const [bottoms, setBottoms] = useState([])
+  const [tops, setTops] = useState([])
+  const [outerwear, setOuterwear] = useState([])
+  const [accessories, setAccessories] = useState([])
+
 
   function resetGenerate() {
     setSelected("")
@@ -50,10 +59,7 @@ function App({ signOut, user }) {
   }
 
   async function addItem() {
-
     if (
-      // TODO:
-      // Add back in id generation here
       imageFile !== null &&
       item.name !== null &&
       item.type !== null &&
@@ -62,21 +68,18 @@ function App({ signOut, user }) {
       item.occasion !== null &&
       item.description !== null
     ) {
+
       try {
-        console.log(imageFile.toString())
-        console.log(item)
-
-        // TODO:
         // here generate image id w/ uuid
-        // let imgName = uuidv4()
-        // console.log(imgName)
+        let imgName = uuidv4() + imageFile.name
 
-        const result = await Storage.put(imageFile.name, imageFile, {
+        await Storage.put(imgName, imageFile, {
           contentType: imageFile.type
         })
         await API.graphql(graphqlOperation(createClothing, {
           input: {
             name: item.name,
+            id: imgName,
             type: item.type,
             color: item.color,
             description: item.description,
@@ -84,11 +87,12 @@ function App({ signOut, user }) {
             weather: item.weather.split(",")
           }
         }));
-        
 
-        // TODO:
-        // Here add to database
-        console.log(user.username)
+        // update user closet information
+        await onLogin()
+
+        setImageFile(null)
+
         return {
           "success": "Item added"
         }
@@ -103,58 +107,113 @@ function App({ signOut, user }) {
         "error": "Missing information"
       }
     }
-
-    // TODO: 
-    // update user info here...
   }
 
-  async function deleteItem() {
-    //remove on id
-    const deletedItem = await API.graphql({
-      query: deleteClothing,
-      variables: {
-        input: {
-          id: "YOUR_RECORD_ID"
+
+  async function deleteItem(itemID) {
+
+    // remove item from database on id
+    try {
+      const deletedItem = await API.graphql({
+        query: deleteClothing,
+        variables: {
+          input: {
+            id: itemID
+          }
         }
-      }
-    });
-    //remove image
-    await Storage.remove("name");
-  }
+      });
 
-  async function updateOutfitItem() {
-    //make sure you have the id
-    await API.graphql(graphqlOperation(updateClothing, {
-      input: {
-        id: "ADD ID HERE",
-        name: item.name,
-        type: item.type,
-        color: item.color,
-        description: item.description,
-        occasion: item.occasion.split(","),
-        weather: item.weather.split(",")
-      }
-    }));
-    //everything but storage
-    // TODO: Update image
-  }
+      console.log(deletedItem)
 
-  async function onLogin() {
-    //query all clothes
-    //seperate by type (top, bottom, jacket)
-    const vars = {
-      filter: {
-        type: {
-          eq: "Shirt"
-        }
+      //remove image from s3 bucket
+      const res = await Storage.remove(itemID);
+
+      await onLogin()
+
+      return {
+        "success": "Item deleted successfully"
+      }
+    } catch (err) {
+      console.log(err)
+      return {
+        "error": "Error deleting item"
       }
     }
-    const res = await API.graphql({
-      query: listClothing,
-      variables: vars
-    });
-    console.log(res)
+
   }
+
+
+  async function updateOutfitItem(itemID) {
+
+    try {
+      if (item.name !== null) {
+        await API.graphql(graphqlOperation(updateClothing, {
+          input: {
+            id: item.id,
+            name: item.name,
+            type: item.type,
+            color: item.color,
+            description: item.description,
+            occasion: item.occasion,
+            weather: item.weather
+          }
+        }))
+      }
+      return {
+        "success": "Item updated successfully"
+      }
+    } catch (err) {
+      console.log(err)
+      return {
+        "error": "Error updating item"
+      }
+    }
+  }
+
+
+  async function onLogin() {
+    const res = await API.graphql({
+      query: listClothing
+    })
+
+    // reset clothing lists
+    let newShoes = []
+    let newBottoms = []
+    let newTops = []
+    let newOuterwear = []
+    let newAccessories = []
+
+    // filter 
+    for (const item of res.data.listClothing.items) {
+      switch (item.type) {
+        case "Shoes":
+          newShoes.push(item)
+          break;
+        case "Bottoms":
+          newBottoms.push(item)
+          break;
+        case "Tops":
+          newTops.push(item)
+          break;
+        case "Outerwear":
+          newOuterwear.push(item)
+          break;
+        case "Accessories":
+          newAccessories.push(item)
+          break;
+        default:
+          break;
+      }
+    }
+
+    setShoes(newShoes)
+    setBottoms(newBottoms)
+    setTops(newTops)
+    setOuterwear(newOuterwear)
+    setAccessories(newAccessories)
+
+  }
+
 
   async function createOutfit() {
     //Creates the outfit
@@ -174,7 +233,6 @@ function App({ signOut, user }) {
   }
 
 
-
   async function deleteOutfit() {
     const deletedItem = await API.graphql({
       query: deleteOutfit,
@@ -185,6 +243,12 @@ function App({ signOut, user }) {
       }
     });
   }
+
+  if (!userInfo) {
+    setUserInfo(true)
+    onLogin()
+  }
+
 
   return (
     <div>
@@ -200,7 +264,11 @@ function App({ signOut, user }) {
         savedOutfits={[]}
       />
       <MyCloset
-        clothes={["something"]}
+        shoes={shoes}
+        bottoms={bottoms}
+        tops={tops}
+        outerwear={outerwear}
+        accessories={accessories}
         setItemView={setItemView}
       />
       {
@@ -212,7 +280,9 @@ function App({ signOut, user }) {
             setItem={setItem}
             item={item}
             setItemView={setItemView}
-            addItem={addItem} />
+            deleteItem={deleteItem}
+            updateItem={updateOutfitItem}
+          />
         ) : (
           null
         )

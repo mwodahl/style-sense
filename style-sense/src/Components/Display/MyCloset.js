@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Tabs, TabItem, View, Card, Image } from '@aws-amplify/ui-react'
 import Carousel from "react-elastic-carousel";
 import '../../css/Closet.css';
@@ -15,29 +15,31 @@ const breakPoints = [
 function MyCloset(props) {
 
     let bucket = require('../../env.json')
-    const data = require('../../tmp_schema/data.json')
 
-    // TODO:
-    // Get rid of this after pulling in data
-    const shoes = [
-        data.clothes[0],
-        data.clothes[1],
-        data.clothes[2],
-        data.clothes[3],
-        data.clothes[4],
-        data.clothes[5],
-        data.clothes[6]
-    ]
+    console.log(props.shoes)
 
-    const setView = (index) => {
-        console.log('setView called...' + index)
-        props.setItemView(data.clothes[index])
+    const setView = (type, index) => {
+        switch (type) {
+            case "shoes":
+                props.setItemView(props.shoes[index])
+                break;
+            case "bottoms":
+                props.setItemView(props.bottoms[index])
+                break;
+            case "tops":
+                props.setItemView(props.tops[index])
+                break;
+            case "outerwear":
+                props.setItemView(props.outerwear[index])
+                break;
+            case "accessories":
+                props.setItemView(props.accessories[index])
+                break;
+            default:
+                break;
+        }
     }
 
-    // Placeholders
-    const [tops, setTops] = useState([1, 2, 3, 4, 5, 6, 7]);
-    const [jackets, setJackets] = useState([1, 2, 3]);
-    const [accessories, setAccessories] = useState([1, 2, 3, 4, 5]);
     return (
         <View
             height="45%"
@@ -68,26 +70,22 @@ function MyCloset(props) {
                 <Tabs>
                     <TabItem title="Shoes">
                         {
-                            props.clothes.length === 0 ? (
+                            props.shoes.length === 0 ? (
                                 <View
+                                    marginTop="5rem"
                                     textAlign="center"
+                                    className='header'
                                 >
                                     <h3> Select 'Add Item' to add an item to your closet </h3>
                                 </View>
                             ) : (
                                 <Carousel breakPoints={breakPoints}>
                                     {
-                                        /* 
-                                        * So in here we're going to map props.shoes
-                                        * to a card with an image. Card should have a slight box shadow.
-                                        * TODO:
-                                        * Replace with props.shoes (or filter in this component)
-                                        */
-                                        shoes.map((item, index) => (
+                                        props.shoes.map((item, index) => (
                                             <Card
                                                 id="clothingCard"
                                                 key={index}
-                                                onClick={() => setView(index)}
+                                                onClick={() => setView("shoes", index)}
                                             >
                                                 <Image
                                                     className='responsive'
@@ -102,30 +100,24 @@ function MyCloset(props) {
                     </TabItem>
                     <TabItem title="Bottoms">
                         {
-                            [].length === 0 ? (
+                            props.bottoms.length === 0 ? (
                                 <View
-                                    textAlign="center"
-                                    position="relative"
                                     marginTop="5rem"
+                                    textAlign="center"
+                                    className='header'
                                 >
                                     <h3
-                                    className='header'
+                                        className='header'
                                     > Select 'Add Item' to add an item to your closet </h3>
                                 </View>
                             ) : (
                                 <Carousel breakPoints={breakPoints}>
                                     {
-                                        /* 
-                                        * So in here we're going to map props.shoes
-                                        * to a card with an image. Card should have a slight box shadow.
-                                        * TODO:
-                                        * Replace with props.shoes (or filter in this component)
-                                        */
-                                        [].map((item, index) => (
+                                        props.bottoms.map((item, index) => (
                                             <Card
                                                 id="clothingCard"
                                                 key={index}
-                                                onClick={() => setView(index)}
+                                                onClick={() => setView("bottoms", index)}
                                             >
                                                 <Image
                                                     className='responsive'
@@ -139,19 +131,100 @@ function MyCloset(props) {
                         }
                     </TabItem>
                     <TabItem title="Tops">
-                        <Carousel breakPoints={breakPoints}>
-                            {tops.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
-                        </Carousel>
+                        {
+                            props.tops.length === 0 ? (
+                                <View
+                                    textAlign="center"
+                                    position="relative"
+                                    marginTop="5rem"
+                                >
+                                    <h3
+                                        className='header'
+                                    > Select 'Add Item' to add an item to your closet </h3>
+                                </View>
+                            ) : (
+                                <Carousel breakPoints={breakPoints}>
+                                    {
+                                        props.tops.map((item, index) => (
+                                            <Card
+                                                id="clothingCard"
+                                                key={index}
+                                                onClick={() => setView("tops", index)}
+                                            >
+                                                <Image
+                                                    className='responsive'
+                                                    src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                />
+                                            </Card>
+                                        ))
+                                    }
+                                </Carousel>
+                            )
+                        }
                     </TabItem>
-                    <TabItem title="Jackets">
-                        <Carousel breakPoints={breakPoints}>
-                            {jackets.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
-                        </Carousel>
+                    <TabItem title="Outerwear">
+                        {
+                            props.outerwear.length === 0 ? (
+                                <View
+                                    textAlign="center"
+                                    position="relative"
+                                    marginTop="5rem"
+                                >
+                                    <h3
+                                        className='header'
+                                    > Select 'Add Item' to add an item to your closet </h3>
+                                </View>
+                            ) : (
+                                <Carousel breakPoints={breakPoints}>
+                                    {
+                                        props.outerwear.map((item, index) => (
+                                            <Card
+                                                id="clothingCard"
+                                                key={index}
+                                                onClick={() => setView("outerwear", index)}
+                                            >
+                                                <Image
+                                                    className='responsive'
+                                                    src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                />
+                                            </Card>
+                                        ))
+                                    }
+                                </Carousel>
+                            )
+                        }
                     </TabItem>
                     <TabItem title="Accessories">
-                        <Carousel breakPoints={breakPoints}>
-                            {accessories.map(item => <View className='closet__carousel' key={item}>{item}</View>)}
-                        </Carousel>
+                        {
+                            props.accessories.length === 0 ? (
+                                <View
+                                    textAlign="center"
+                                    position="relative"
+                                    marginTop="5rem"
+                                >
+                                    <h3
+                                        className='header'
+                                    > Select 'Add Item' to add an item to your closet </h3>
+                                </View>
+                            ) : (
+                                <Carousel breakPoints={breakPoints}>
+                                    {
+                                        props.accessories.map((item, index) => (
+                                            <Card
+                                                id="clothingCard"
+                                                key={index}
+                                                onClick={() => setView("accessories", index)}
+                                            >
+                                                <Image
+                                                    className='responsive'
+                                                    src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                />
+                                            </Card>
+                                        ))
+                                    }
+                                </Carousel>
+                            )
+                        }
                     </TabItem>
                 </Tabs>
             </View>

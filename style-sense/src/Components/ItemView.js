@@ -3,30 +3,38 @@ import { Button, ScrollView, View, TextField, Flex, Image } from '@aws-amplify/u
 import { FileUploader } from "react-drag-drop-files";
 import BarLoader from 'react-spinners/BarLoader';
 import { ImCancelCircle } from 'react-icons/im';
+import { AiOutlineEdit, AiFillEdit } from 'react-icons/ai';
 import '../css/Shared.css'
 
 
 function ItemView(props) {
-    
+
     let bucket = require('../env.json')
-    const bucketURI = bucket.REACT_APP_BUCKET_URL + props.clothingItem.id
     const fileTypes = ["JPG", "PNG", "JPEG"]
-    
+
     const [del, setDel] = useState(false)
     const [result, setResult] = useState({})
     const [loading, setLoading] = useState(false)
+    const [itemEdit, setItemEdit] = useState({
+        "name": false,
+        "type": false,
+        "color": false,
+        "weather": false,
+        "occasion": false,
+        "description": false
+    })
 
     const handleFile = (file) => {
         props.setImageFile(file)
     }
 
-    function deleteItem() {
+    async function deleteItem() {
         if (del) {
-            console.log("delete")
+            setLoading(true)
+            let res = await props.deleteItem(props.clothingItem.id)
             props.setImageFile(null)
             props.setItem({
                 "name": null,
-                "id": null,
                 "type": null,
                 "color": null,
                 "weather": null,
@@ -34,27 +42,38 @@ function ItemView(props) {
                 "description": null
             })
             props.setItemView(null)
-            // TODO:
-            // Call props + delete item from database + storage
+            setResult(res)
+            setLoading(false)
         } else {
             setDel(true)
         }
     }
 
-    function updateValue(type, value) {
-        let item = props.item
+    async function updateValue(type, value) {
+        let item
+        if (props.item[type] === null) {
+            item = props.clothingItem
+        } else {
+            item = props.item
+        }
         item[type] = value
-        props.setItem(item)
+        await props.setItem(item)
+        setItemEdit({
+            "name": false,
+            "type": false,
+            "color": false,
+            "weather": false,
+            "occasion": false,
+            "description": false
+        })
+        props.setImageFile(null)
     }
 
-    async function submitItem() {
+    async function update(id) {
         setLoading(true)
-        
-        // TODO: Create an update clothing function in props
-        // await that instead of addItem
-
+        let res = await props.updateItem(id)
+        setResult(res)
         setLoading(false)
-        setResult("")
     }
 
     function exitWindow() {
@@ -121,43 +140,94 @@ function ItemView(props) {
                     marginRight="auto"
                 >
                     <Image
-                        src={bucketURI}
+                        src={bucket.REACT_APP_BUCKET_URL + props.clothingItem.id}
                         width={'20vw'}
                         height={'20vw'}
                     />
                 </View>
 
-                <View
+                {/* <View
                     position="relative"
                     marginBottom="1rem"
                     marginTop="1rem"
                 >
                     <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />
-                </View>
+                </View> */}
 
                 <TextField
                     label="Item Name"
-                    value={props.clothingItem.name}
+                    value={itemEdit["name"] === false ? props.clothingItem.name : null}
+                    placeholder={itemEdit["name"] === true ? props.clothingItem.name : null}
+                    innerEndComponent={
+                        <Button
+                            onClick={() => {
+                                setItemEdit({
+                                    "name": !itemEdit["name"],
+                                    "type": itemEdit.type,
+                                    "color": itemEdit.color,
+                                    "weather": itemEdit.weather,
+                                    "occasion": itemEdit.occasion,
+                                    "description": itemEdit.description
+                                })
+                            }}
+                        >
+                            {itemEdit.name === false ? (
+                                <AiOutlineEdit size={'1.5rem'} />
+                            ) : (
+                                <AiFillEdit size={'1.5rem'} />
+                            )}
+                        </Button>
+                    }
                     onChange={(e) => updateValue("name", e.nativeEvent.target.value)} />
                 <TextField
                     label="Type"
-                    value={props.clothingItem.type}
+                    value={itemEdit["type"] === false ? props.clothingItem.type : null}
+                    placeholder={itemEdit["type"] === true ? props.clothingItem.type : null}
+                    innerEndComponent={
+                        <Button>
+                                <AiOutlineEdit size={'1.5rem'} />
+                        </Button>
+                    }
                     onChange={(e) => updateValue("type", e.nativeEvent.target.value)} />
                 <TextField
                     label="Color"
-                    value={props.clothingItem.color}
+                    value={itemEdit["color"] === false ? props.clothingItem.color : null}
+                    placeholder={itemEdit["color"] === true ? props.clothingItem.color : null}
+                    innerEndComponent={
+                            <Button>
+                                    <AiOutlineEdit size={'1.5rem'} />
+                            </Button>
+                    }
                     onChange={(e) => updateValue("color", e.nativeEvent.target.value)} />
                 <TextField
                     label="Weather"
-                    value={props.clothingItem.weather}
+                    value={itemEdit["weather"] === false ? props.clothingItem.weather : null}
+                    placeholder={itemEdit["weather"] === true ? props.clothingItem.weather : null}
+                    innerEndComponent={
+                        <Button>
+                                <AiOutlineEdit size={'1.5rem'} />
+                        </Button>
+                }
                     onChange={(e) => updateValue("weather", e.nativeEvent.target.value)} />
                 <TextField
                     label="Occasion"
-                    value={props.clothingItem.occasion}
+                    value={itemEdit["occasion"] === false ? props.clothingItem.occasion : null}
+                    placeholder={itemEdit["occasion"] === true ? props.clothingItem.occasion : null}
+                    innerEndComponent={
+                        <Button>
+                                <AiOutlineEdit size={'1.5rem'} />
+                        </Button>
+                }
                     onChange={(e) => updateValue("occasion", e.nativeEvent.target.value)} />
                 <TextField
                     label="Description"
-                    value={props.clothingItem.description}
+                    value={itemEdit["description"] === false ? props.clothingItem.description : null}
+                    placeholder={itemEdit["description"] === true ? props.clothingItem.description : null}
+                    innerEndComponent={
+                        <Button>
+                                <AiOutlineEdit size={'1.5rem'} />
+                        </Button>
+                }
                     onChange={(e) => updateValue("description", e.nativeEvent.target.value)} />
                 <View height="1rem"></View>
             </Flex>
@@ -172,13 +242,17 @@ function ItemView(props) {
             >
                 {
                     result.success !== undefined ? (
-                        <h3>
+                        <h3
+                        className='success'
+                        >
                             {result.success}
                         </h3>
                     ) : (
                         result.error !== undefined ? (
-                            <h3>
-                                {result.error}
+                            <h3
+                            className='error'
+                            >
+                               Error: {result.error}
                             </h3>
                         ) : (
                             null
@@ -226,7 +300,7 @@ function ItemView(props) {
                     Delete
                 </Button>
                 <Button
-                    onClick={submitItem}
+                    onClick={() => update(props.clothingItem.id)}
                     id='add-button'
                 >
                     Save
@@ -239,7 +313,7 @@ function ItemView(props) {
                         textAlign="center"
                     >
                         <h5
-                            style= {{color: 'darkred', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold'}}
+                            style={{ color: 'darkred', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}
                         >
                             This operation will delete this item from your closet and cannot be undone.
                             Would you like to proceed?
@@ -258,7 +332,7 @@ function ItemView(props) {
                         >
                             <Button
                                 id='cancel-button'
-                                onClick={() => setDel(false) }
+                                onClick={() => setDel(false)}
                             >
                                 No
                             </Button>
