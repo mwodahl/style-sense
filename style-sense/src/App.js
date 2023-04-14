@@ -126,8 +126,9 @@ function App({ signOut, user }) {
       console.log(deletedItem)
 
       //remove image from s3 bucket
-      const res = await Storage.remove(itemID);
+      await Storage.remove(itemID);
 
+      // update user closet information
       await onLogin()
 
       return {
@@ -159,6 +160,10 @@ function App({ signOut, user }) {
           }
         }))
       }
+
+      // update user closet information
+      await onLogin()
+
       return {
         "success": "Item updated successfully"
       }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Card, Flex, Menu, MenuItem, MenuButton } from '@aws-amplify/ui-react'
+import { View, Card, Flex, Menu, MenuItem, MenuButton, Image } from '@aws-amplify/ui-react'
 import '../css/Shared.css'
+import Logo from '../assets/StyleSense_logo.png'
 
 function NavBar(props) {
 
@@ -48,10 +49,15 @@ function NavBar(props) {
               justifyContent="flex-start"
               alignItems="center"
             >
-              <h3
-              className='navHeader'>
-                StyleSense Logo
-                </h3>
+              <View>
+              <Image
+              marginTop={'-1rem'}
+              marginLeft={'1rem'}
+              maxWidth={'9rem'}
+              maxHeight={'6rem'}
+              src={Logo}
+              />
+              </View>
             </Flex>
           </Card>
           <Card

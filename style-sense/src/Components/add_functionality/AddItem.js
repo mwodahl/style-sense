@@ -85,13 +85,13 @@ function AddItem(props) {
                     textAlign="center"
                     position="relative"
                     marginBottom="1rem"
-                >
-                    <h3
-                        className='header'
+                    >
+                    <h2
+                    className='header'
                     >
                         Add Item
-                    </h3>
-                </View>
+                    </h2>
+            </View> 
                 <View
                     position="relative"
                     marginBottom='1rem'

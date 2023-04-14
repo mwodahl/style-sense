@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, ScrollView, View, TextField, Flex, Image, SelectField } from '@aws-amplify/ui-react'
-import { FileUploader } from "react-drag-drop-files";
 import BarLoader from 'react-spinners/BarLoader';
 import { ImCancelCircle } from 'react-icons/im';
 import { AiOutlineEdit, AiFillEdit } from 'react-icons/ai';
@@ -10,7 +9,6 @@ import '../css/Shared.css'
 function ItemView(props) {
 
     let bucket = require('../env.json')
-    const fileTypes = ["JPG", "PNG", "JPEG"]
 
     const [del, setDel] = useState(false)
     const [result, setResult] = useState({})
@@ -23,10 +21,6 @@ function ItemView(props) {
         "occasion": false,
         "description": false
     })
-
-    const handleFile = (file) => {
-        props.setImageFile(file)
-    }
 
     async function deleteItem() {
         if (del) {
@@ -126,11 +120,11 @@ function ItemView(props) {
                     position="relative"
                     marginBottom="1rem"
                 >
-                    <h3
+                    <h2
                         className='header'
                     >
                         {props.clothingItem.name}
-                    </h3>
+                    </h2>
                 </View>
                 <View
                     position="relative"
@@ -138,6 +132,7 @@ function ItemView(props) {
                     height="fit-content"
                     marginLeft="auto"
                     marginRight="auto"
+                    marginBottom="2rem"
                 >
                     <Image
                         src={bucket.REACT_APP_BUCKET_URL + props.clothingItem.id}
