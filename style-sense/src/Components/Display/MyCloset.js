@@ -46,6 +46,7 @@ function MyCloset(props) {
             top="10%"
             left="15%"
             backgroundColor="#FFFFFF"
+            marginTop={'1rem'}
         >
 
             <View

@@ -38,10 +38,7 @@
     color: #fff;
     font-family: 'Montserrat', sans-serif;
     font-weight: bolder;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
+    margin-bottom: -2rem;
 }
 
 .weather h3,

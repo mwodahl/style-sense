@@ -3,6 +3,10 @@ import { View, Card, Flex, Menu, MenuItem, MenuButton, Image } from '@aws-amplif
 import '../css/Shared.css';
 import '../css/NavBar.css';
 import Logo from '../assets/StyleSense_logo.png'
+import { BsCloudRain } from "react-icons/bs";
+import { BsCloud } from "react-icons/bs";
+import { BsCloudSnow } from "react-icons/bs";
+import { IoSunnyOutline } from "react-icons/io5";
 
 function NavBar(props) {
 
@@ -40,6 +44,13 @@ function NavBar(props) {
       .then((res) => res.json())
       .then((data) => setData(data));
   }, [url]);
+
+  const iconMap = {
+    "Rain": <BsCloudRain size={'2.5rem'} />,
+    "Clouds": <BsCloud size={'2.5rem'} />,
+    "Snow": <BsCloudSnow size={'2.5rem'} />,
+    "Clear": <IoSunnyOutline size={'2.5rem'} />
+  }
 
 
   return (
@@ -84,13 +95,17 @@ function NavBar(props) {
             className='background'>
           <Flex
             direction="row"
-            justifyContent="center"
+            justifyContent="space-evenly"
             alignItems="center"
           >
             <View className="weather">
+              {data.weather ? iconMap[data.weather[0].main] : null}
+            </View>
+            <View className="weather">
               {data.name ? <h2>{data.name}</h2> : null}
-              {data.main ? <h3>{data.main.temp.toFixed()}°F</h3> : null}
-              {data.weather ? <h3>{data.weather[0].main}</h3> : null}
+            </View>
+            <View className="weather">
+              {data.main ? <h2>{data.main.temp.toFixed()}°F</h2> : null}
             </View>
           </Flex>
         </Card>
