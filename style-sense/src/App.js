@@ -1,5 +1,5 @@
 import React from 'react';
-import { withAuthenticator } from '@aws-amplify/ui-react'
+import { withAuthenticator, ScrollView } from '@aws-amplify/ui-react'
 import { Storage, API } from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
 import '@aws-amplify/ui-react/styles.css'
@@ -14,8 +14,11 @@ import SavedOutfits from './Components/Display/SavedOutfits';
 import MyCloset from './Components/Display/MyCloset';
 import ItemView from './Components/ItemView';
 import { graphqlOperation } from 'aws-amplify';
-import { createClothing, deleteClothing, deleteOutfit, updateClothing, createOutfitItem } from './graphql/mutations';
-import { listClothing } from './graphql/queries';
+import {
+  createClothing, deleteClothing, updateClothing,
+  createOutfit, deleteOutfit, createOutfitItem
+} from './graphql/mutations';
+import { listClothing, listOutfits, getOutfit } from './graphql/queries';
 
 function App({ signOut, user }) {
 
@@ -48,6 +51,10 @@ function App({ signOut, user }) {
   const [tops, setTops] = useState([])
   const [outerwear, setOuterwear] = useState([])
   const [accessories, setAccessories] = useState([])
+
+  // state for outfits
+  const [outfits, setOutfits] = useState([])
+  const [outfitItems, setOutfitItems] = useState([])
 
 
   function resetGenerate() {
@@ -181,6 +188,10 @@ function App({ signOut, user }) {
       query: listClothing
     })
 
+    const outfitRes = await API.graphql({
+      query: listOutfits
+    })
+
     // reset clothing lists
     let newShoes = []
     let newBottoms = []
@@ -211,30 +222,47 @@ function App({ signOut, user }) {
       }
     }
 
+    // update state with new clothing lists + outfit list
     setShoes(newShoes)
     setBottoms(newBottoms)
     setTops(newTops)
     setOuterwear(newOuterwear)
     setAccessories(newAccessories)
+    setOutfits(outfitRes.data.listOutfits.items)
 
   }
 
 
-  async function createOutfit() {
-    //Creates the outfit
-    const outfit = await API.graphql(graphqlOperation(createOutfit, {
-      input: {
-        name: "My First Fit!"
-      }
-    }));
+  async function submitOutfit() {
 
-    // Must do this for every clothing item (maybe for loop for each clothing item) 
-    await API.graphql(graphqlOperation(createOutfitItem, {
-      input: {
-        clothingId: "ID",
-        outfitId: outfit.data.createOutfit.id
+    if (outfitItems.length > 0) {
+      try {
+
+        //Creates the outfit
+        const outfit = await API.graphql(graphqlOperation(createOutfit, {
+          input: {
+            name: "Test1"
+          }
+        }));
+
+        // Must do this for every clothing item (maybe for loop for each clothing item) 
+        for (const item of outfitItems) {
+          console.log('adding item ', item.id)
+          await API.graphql(graphqlOperation(createOutfitItem, {
+            input: {
+              clothingId: item.id,
+              outfitId: outfit.data.createOutfit.id
+            }
+          }));
+        }
+
+        // update user closet information
+        await updateOutfits()
+
+      } catch (err) {
+        console.log(err)
       }
-    }));
+    }
   }
 
 
@@ -249,6 +277,34 @@ function App({ signOut, user }) {
     });
   }
 
+  async function updateOutfits() {
+    try {
+      const res = await API.graphql({
+        query: listOutfits
+      })
+
+      console.log(res)
+
+      for (const item of res.data.listOutfits.items) {
+        console.log(item.id)
+        const result = await API.graphql({
+          query: getOutfit,
+          variables: {
+            input: {
+              id: item.id
+            }
+          }
+        });
+        console.log(result)
+      }
+
+      setOutfits([...res.data.listOutfits.items])
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // pull in user info after login
   if (!userInfo) {
     setUserInfo(true)
     onLogin()
@@ -265,17 +321,22 @@ function App({ signOut, user }) {
         selected={selected}
         setSelected={setSelected}
       />
-      <SavedOutfits
-        savedOutfits={[]}
-      />
-      <MyCloset
-        shoes={shoes}
-        bottoms={bottoms}
-        tops={tops}
-        outerwear={outerwear}
-        accessories={accessories}
-        setItemView={setItemView}
-      />
+      <ScrollView
+        height={'fit-content'}
+        width={'fit-content'}
+      >
+        <SavedOutfits
+          savedOutfits={outfits}
+        />
+        <MyCloset
+          shoes={shoes}
+          bottoms={bottoms}
+          tops={tops}
+          outerwear={outerwear}
+          accessories={accessories}
+          setItemView={setItemView}
+        />
+      </ScrollView>
       {
         itemView !== null ? (
           <ItemView
@@ -333,10 +394,17 @@ function App({ signOut, user }) {
         ) : (
           (selected === "Add Outfit" && manualGenerate === true) ? (
             <ManualGenerate
-              items={[]}
               addItem={manAddItem}
               setAddItem={setManAddItem}
               reset={resetGenerate}
+              shoes={shoes}
+              bottoms={bottoms}
+              tops={tops}
+              outerwear={outerwear}
+              accessories={accessories}
+              outfitItems={outfitItems}
+              setOutfitItems={setOutfitItems}
+              submitOutfit={submitOutfit}
             />
           ) : (
             null

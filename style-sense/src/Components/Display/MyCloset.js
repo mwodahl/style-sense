@@ -16,8 +16,6 @@ function MyCloset(props) {
 
     let bucket = require('../../env.json')
 
-    console.log(props.shoes)
-
     const setView = (type, index) => {
         switch (type) {
             case "shoes":

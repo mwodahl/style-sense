@@ -18,9 +18,12 @@ function SavedOutfits(props) {
     // Add carousel
     // Add props functionality for viewing / modifying an outfit
 
-    let bucket = require('../../env.json')
-    const data = require('../../tmp_schema/data.json')
+    // onClick -> set outfitView to be the outfit that was clicked...
+    // allow users to modify the outfit in manual
 
+    let bucket = require('../../env.json')
+
+    console.log(props.savedOutfits)
 
     return (
         <View
@@ -59,34 +62,30 @@ function SavedOutfits(props) {
                             </View>
                         </TabItem>
                     ) : (
-                        <TabItem>
-
-                            {props.savedOutfits.map((outfit) => {
+                            props.savedOutfits.map((outfit) => (
+                                <TabItem title={outfit.name}>
                                 <Carousel breakPoints={breakPoints}>
                                     {
                                         /* 
-                                        * So in here we're going to map props.shoes
-                                        * to a card with an image. Card should have a slight box shadow.
                                         * TODO:
-                                        * Replace with props.shoes (or filter in this component)
+                                        * Issue in here that needs to be figured out.
                                         */
-                                        [].map((item, index) => (
-                                            <Card
-                                                id="clothingCard"
-                                                key={index}
-                                                onClick={() => console.log('click')}
-                                            >
-                                                <Image
-                                                    className='responsive'
-                                                    src={bucket.REACT_APP_BUCKET_URL + item.id}
-                                                />
-                                            </Card>
-                                        ))
+                                        // outfit.map((item, index) => (
+                                        //     <Card
+                                        //         id="clothingCard"
+                                        //         key={index}
+                                        //         onClick={() => console.log('click')}
+                                        //     >
+                                        //         <Image
+                                        //             className='responsive'
+                                        //             src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                        //         />
+                                        //     </Card>
+                                        // ))
                                     }
-                                </Carousel>
-                            })}
-
-                        </TabItem>
+                                    </Carousel>
+                                    </TabItem>
+                            ))
                     )
                 }
             </Tabs>

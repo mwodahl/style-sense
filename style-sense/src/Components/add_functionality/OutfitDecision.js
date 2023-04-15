@@ -22,7 +22,8 @@ function OutfitDecision(props) {
             left="42.5%"
             top="40%"
             backgroundColor="#FFFFFF"
-            borderRadius="5%"
+            borderRadius="10px"
+            padding="5px"
             boxShadow={'10px 10px 40px 0px #22223b'}
         >
             <Button
@@ -40,7 +41,8 @@ function OutfitDecision(props) {
             <View
                 textAlign="center"
                 position="relative"
-                marginTop="-0.5rem"
+                marginTop={"-0.5rem"}
+                marginBottom={"2rem"}
             >
                 <h3
                     className='header'

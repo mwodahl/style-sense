@@ -54,7 +54,7 @@ function NavBar(props) {
               marginTop={'-1rem'}
               marginLeft={'1rem'}
               maxWidth={'9rem'}
-              maxHeight={'6rem'}
+              maxHeight={'100%'}
               src={Logo}
               />
               </View>

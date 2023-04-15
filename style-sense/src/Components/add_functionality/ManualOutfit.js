@@ -1,12 +1,23 @@
 import React, { useEffect } from 'react';
 import { Tabs, TabItem, Card, Image, Button, View, Flex, SelectField, ScrollView } from '@aws-amplify/ui-react'
+import Carousel from "react-elastic-carousel";
 import { IoAdd } from "react-icons/io5";
 import { ImCancelCircle } from 'react-icons/im';
 import { BiArrowBack } from 'react-icons/bi';
 import '../../css/Shared.css'
+import '../../css/Closet.css';
 
+const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 600, itemsToShow: 2 },
+    { width: 900, itemsToShow: 3 },
+    { width: 1050, itemsToShow: 4 },
+    { width: 1200, itemsToShow: 5 },
+];
 
 function ManualGenerate(props) {
+
+    let bucket = require('../../env.json')
 
     const titleStyle = {
         position: 'relative',
@@ -14,23 +25,32 @@ function ManualGenerate(props) {
         marginBottom: '2rem',
     }
 
+    // returns to add item / clothing view
     function goBack() {
         props.setAddItem(false)
     }
 
+    // exits the window
     function exitWindow() {
         props.reset()
+        props.setOutfitItems([])
     }
 
+    // TODO:
     function saveOutfit() {
-        console.log("outfit saved")
-        props.reset()
+    
+    props.submitOutfit()
+
     }
 
-    function addItem() {
-        props.setAddItem(true)
-        console.log("item added")
+    function addItem(newItem) {
+        let currItems = [...props.outfitItems]
+        currItems.push(newItem)
+        props.setOutfitItems(currItems)
+        props.setAddItem(false)
     }
+
+    console.log(props.outfitItems)
 
     return (
         props.addItem === false ?
@@ -40,7 +60,7 @@ function ManualGenerate(props) {
                     height="fit-content"
                     width="60%"
                     left="20%"
-                    top="30%"
+                    top="25%"
                     backgroundColor="#FFFFFF"
                     borderRadius="10px"
                     boxShadow={'10px 10px 40px 0px #22223b'}
@@ -53,7 +73,7 @@ function ManualGenerate(props) {
                         marginTop={'1rem'}
                         padding='0.5rem'
                         border={'none'}
-                        onClick={goBack}
+                        onClick={exitWindow}
                     >
                         <ImCancelCircle size={'1.5rem'} />
                     </Button>
@@ -75,7 +95,7 @@ function ManualGenerate(props) {
                         textAlign="center"
                     >
                         <Button
-                            onClick={addItem}
+                            onClick={() => props.setAddItem(true)}
                             id="add-button"
                         >
                             <IoAdd />
@@ -90,10 +110,10 @@ function ManualGenerate(props) {
                     >
                         <TabItem title="Items">
                             {
-                                props.items.length === 0 ? (
+                                props.outfitItems.length === 0 ? (
                                     <View
                                         position="relative"
-                                        style={{ marginTop: '4rem', marginBottom: '-2rem' }}
+                                        style={{ marginTop: '4rem', marginBottom: '4rem' }}
                                         textAlign="center"
                                     >
                                         <h3 className='header'>Select the '+' to add items to outfit.</h3>
@@ -101,22 +121,20 @@ function ManualGenerate(props) {
                                 ) : (
                                     <ScrollView>
                                         <Flex>
-                                            {
-                                                props.items.map((item) => (
-                                                    /* 
-                                                    TODO:
-                                                    Add Carousel here..?
-                                                    Add Name of item on top of card
-                                                    Image w/ source below. 
-                                                    */
-                                                    <Card>
+                                            <Carousel breakPoints={breakPoints}>
+                                                {props.outfitItems.map((item, index) => (
+                                                    <Card
+                                                        id="clothingCard"
+                                                        key={index}
+                                                    >
                                                         <Image
-                                                            source={item.image}
+                                                            className='responsive'
+                                                            src={bucket.REACT_APP_BUCKET_URL + item.id}
                                                         />
-                                                        <h3>{item.name}</h3>
                                                     </Card>
                                                 ))
-                                            }
+                                                }
+                                            </Carousel>
                                         </Flex>
                                     </ScrollView>
                                 )
@@ -135,14 +153,12 @@ function ManualGenerate(props) {
                             justifyContent="space-evenly"
                         >
                             <Button
-                                marginTop={"6rem"}
                                 onClick={exitWindow}
                                 id="cancel-button"
                             >
                                 Cancel
                             </Button>
                             <Button
-                                marginTop={"6rem"}
                                 onClick={saveOutfit}
                                 id="add-button"
                             >
@@ -157,7 +173,7 @@ function ManualGenerate(props) {
                 props.addItem === true ? (
                     <View
                         position="fixed"
-                        height="40%"
+                        height="fit-content"
                         width="60%"
                         left="20%"
                         top="30%"
@@ -175,15 +191,15 @@ function ManualGenerate(props) {
                             <BiArrowBack size={'1.5rem'} />
                         </Button>
                         <View
-                        position={'relative'}
-                        textAlign="center"
-                        marginTop={'-1rem'}
+                            position={'relative'}
+                            textAlign="center"
+                            marginTop={'-1rem'}
                         >
-                        <h2
-                        className='header'
-                        >
-                            Select Item
-                        </h2>
+                            <h2
+                                className='header'
+                            >
+                                Select Item
+                            </h2>
                         </View>
                         <Tabs
                             width={'95%'}
@@ -193,19 +209,158 @@ function ManualGenerate(props) {
                             marginTop={'2rem'}
                         >
                             <TabItem title="Shoes">
-                                {/* TODO: Map props to create cards in here that select that item onClick */}
+                                {
+                                    props.shoes.length === 0 ? (
+                                        <View
+                                            marginTop="5rem"
+                                            marginBottom="5rem"
+                                            textAlign="center"
+                                            className='header'
+                                        >
+                                            <h3> No shoes in closet </h3>
+                                        </View>
+                                    ) : (
+                                        <Carousel breakPoints={breakPoints}>
+                                            {
+                                                props.shoes.map((item, index) => (
+                                                    <Card
+                                                        id="clothingCard"
+                                                        key={index}
+                                                        onClick={() => addItem(props.shoes[index])}
+                                                    >
+                                                        <Image
+                                                            className='responsive'
+                                                            src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                        />
+                                                    </Card>
+                                                ))
+                                            }
+                                        </Carousel>
+                                    )
+                                }
                             </TabItem>
                             <TabItem title="Bottoms">
-                                {/* TODO: Map props to create cards in here that select that item onClick */}
+                                {
+                                    props.bottoms.length === 0 ? (
+                                        <View
+                                            marginTop="5rem"
+                                            marginBottom="5rem"
+                                            textAlign="center"
+                                            className='header'
+                                        >
+                                            <h3> No bottoms in closet </h3>
+                                        </View>
+                                    ) : (
+                                        <Carousel breakPoints={breakPoints}>
+                                            {
+                                                props.bottoms.map((item, index) => (
+                                                    <Card
+                                                        id="clothingCard"
+                                                        key={index}
+                                                        onClick={() => addItem(props.bottoms[index])}
+                                                    >
+                                                        <Image
+                                                            className='responsive'
+                                                            src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                        />
+                                                    </Card>
+                                                ))
+                                            }
+                                        </Carousel>
+                                    )
+                                }
                             </TabItem>
                             <TabItem title="Tops">
-                                {/* TODO: Map props to create cards in here that select that item onClick */}
+                                {
+                                    props.tops.length === 0 ? (
+                                        <View
+                                            marginTop="5rem"
+                                            marginBottom="5rem"
+                                            textAlign="center"
+                                            className='header'
+                                        >
+                                            <h3> No tops in closet </h3>
+                                        </View>
+                                    ) : (
+                                        <Carousel breakPoints={breakPoints}>
+                                            {
+                                                props.tops.map((item, index) => (
+                                                    <Card
+                                                        id="clothingCard"
+                                                        key={index}
+                                                        onClick={() => addItem(props.tops[index])}
+                                                    >
+                                                        <Image
+                                                            className='responsive'
+                                                            src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                        />
+                                                    </Card>
+                                                ))
+                                            }
+                                        </Carousel>
+                                    )
+                                }
                             </TabItem>
-                            <TabItem title="Jackets">
-                                {/* TODO: Map props to create cards in here that select that item onClick */}
+                            <TabItem title="Outerwear">
+                                {
+                                    props.outerwear.length === 0 ? (
+                                        <View
+                                            marginTop="5rem"
+                                            marginBottom="5rem"
+                                            textAlign="center"
+                                            className='header'
+                                        >
+                                            <h3> No outerwear in closet </h3>
+                                        </View>
+                                    ) : (
+                                        <Carousel breakPoints={breakPoints}>
+                                            {
+                                                props.outerwear.map((item, index) => (
+                                                    <Card
+                                                        id="clothingCard"
+                                                        key={index}
+                                                        onClick={() => addItem(props.outerwear[index])}
+                                                    >
+                                                        <Image
+                                                            className='responsive'
+                                                            src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                        />
+                                                    </Card>
+                                                ))
+                                            }
+                                        </Carousel>
+                                    )
+                                }
                             </TabItem>
                             <TabItem title="Accessories">
-                                {/* TODO: Map props to create cards in here that select that item onClick */}
+                                {
+                                    props.accessories.length === 0 ? (
+                                        <View
+                                            marginTop="5rem"
+                                            textAlign="center"
+                                            className='header'
+                                        >
+                                            <h3> No accessories in closet </h3>
+                                        </View>
+                                    ) : (
+                                        <Carousel breakPoints={breakPoints}>
+                                            {
+                                                props.accessories.map((item, index) => (
+                                                    <Card
+                                                        id="clothingCard"
+                                                        key={index}
+                                                        onClick={() => addItem(props.accessories[index])}
+                                                    >
+                                                        <Image
+                                                            className='responsive'
+                                                            src={bucket.REACT_APP_BUCKET_URL + item.id}
+                                                        />
+                                                    </Card>
+                                                ))
+                                            }
+                                        </Carousel>
+                                    )
+                                }
                             </TabItem>
                         </Tabs>
                     </View>
