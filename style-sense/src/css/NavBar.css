@@ -33,3 +33,18 @@
     background-color: #2d3142;
     color: #fff;
 }
+
+.weather {
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.weather h3,
+h2 {
+    margin: auto;
+}
