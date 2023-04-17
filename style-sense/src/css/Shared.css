@@ -91,6 +91,20 @@
     cursor: pointer;
 }
 
+#selectedClothingCard {
+    height: fit-content;
+    width: fit-content;
+    border-radius: 5px;
+    background-color: #c9ada7;
+    box-shadow: 5px 5px 10px 0px #22223b;
+    margin: 1rem;
+    margin-top: 2rem;
+}
+
+#selectedClothingCard :hover {
+    cursor: pointer;
+}
+
 .responsive {
     width: 200px;
     padding: 10px;

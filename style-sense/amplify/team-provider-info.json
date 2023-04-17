@@ -20,6 +20,9 @@
       "storage": {
         "StyleSenseBucket": {},
         "s370cf5425": {}
+      },
+      "api": {
+        "stylesense": {}
       }
     }
   }

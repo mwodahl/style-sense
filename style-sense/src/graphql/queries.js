@@ -12,9 +12,6 @@ export const getClothing = /* GraphQL */ `
       weather
       occasion
       description
-      outfits {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
@@ -50,9 +47,7 @@ export const getOutfit = /* GraphQL */ `
     getOutfit(id: $id) {
       id
       name
-      items {
-        nextToken
-      }
+      items
       createdAt
       updatedAt
       owner
@@ -69,111 +64,7 @@ export const listOutfits = /* GraphQL */ `
       items {
         id
         name
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getOutfitItem = /* GraphQL */ `
-  query GetOutfitItem($id: ID!) {
-    getOutfitItem(id: $id) {
-      id
-      clothingId
-      outfitId
-      clothing {
-        id
-        image
-        name
-        type
-        color
-        weather
-        occasion
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      outfit {
-        id
-        name
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listOutfitItems = /* GraphQL */ `
-  query ListOutfitItems(
-    $filter: ModelOutfitItemFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listOutfitItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        clothingId
-        outfitId
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const outfitItemsByClothingId = /* GraphQL */ `
-  query OutfitItemsByClothingId(
-    $clothingId: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelOutfitItemFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    outfitItemsByClothingId(
-      clothingId: $clothingId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        clothingId
-        outfitId
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const outfitItemsByOutfitId = /* GraphQL */ `
-  query OutfitItemsByOutfitId(
-    $outfitId: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelOutfitItemFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    outfitItemsByOutfitId(
-      outfitId: $outfitId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        clothingId
-        outfitId
+        items
         createdAt
         updatedAt
         owner

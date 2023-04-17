@@ -15,9 +15,6 @@ export const createClothing = /* GraphQL */ `
       weather
       occasion
       description
-      outfits {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
@@ -38,9 +35,6 @@ export const updateClothing = /* GraphQL */ `
       weather
       occasion
       description
-      outfits {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
@@ -61,9 +55,6 @@ export const deleteClothing = /* GraphQL */ `
       weather
       occasion
       description
-      outfits {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
@@ -78,9 +69,7 @@ export const createOutfit = /* GraphQL */ `
     createOutfit(input: $input, condition: $condition) {
       id
       name
-      items {
-        nextToken
-      }
+      items
       createdAt
       updatedAt
       owner
@@ -95,9 +84,7 @@ export const updateOutfit = /* GraphQL */ `
     updateOutfit(input: $input, condition: $condition) {
       id
       name
-      items {
-        nextToken
-      }
+      items
       createdAt
       updatedAt
       owner
@@ -112,114 +99,7 @@ export const deleteOutfit = /* GraphQL */ `
     deleteOutfit(input: $input, condition: $condition) {
       id
       name
-      items {
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const createOutfitItem = /* GraphQL */ `
-  mutation CreateOutfitItem(
-    $input: CreateOutfitItemInput!
-    $condition: ModelOutfitItemConditionInput
-  ) {
-    createOutfitItem(input: $input, condition: $condition) {
-      id
-      clothingId
-      outfitId
-      clothing {
-        id
-        image
-        name
-        type
-        color
-        weather
-        occasion
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      outfit {
-        id
-        name
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const updateOutfitItem = /* GraphQL */ `
-  mutation UpdateOutfitItem(
-    $input: UpdateOutfitItemInput!
-    $condition: ModelOutfitItemConditionInput
-  ) {
-    updateOutfitItem(input: $input, condition: $condition) {
-      id
-      clothingId
-      outfitId
-      clothing {
-        id
-        image
-        name
-        type
-        color
-        weather
-        occasion
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      outfit {
-        id
-        name
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteOutfitItem = /* GraphQL */ `
-  mutation DeleteOutfitItem(
-    $input: DeleteOutfitItemInput!
-    $condition: ModelOutfitItemConditionInput
-  ) {
-    deleteOutfitItem(input: $input, condition: $condition) {
-      id
-      clothingId
-      outfitId
-      clothing {
-        id
-        image
-        name
-        type
-        color
-        weather
-        occasion
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      outfit {
-        id
-        name
-        createdAt
-        updatedAt
-        owner
-      }
+      items
       createdAt
       updatedAt
       owner

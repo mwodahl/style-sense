@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Tabs, TabItem, Card, Image, Button, View, Flex, TextField, ScrollView } from '@aws-amplify/ui-react'
 import Carousel from "react-elastic-carousel";
 import { IoAdd } from "react-icons/io5";
-import { RiSubtractFill } from "react-icons/ri";
 import { ImCancelCircle } from 'react-icons/im';
+import { RiSubtractFill } from "react-icons/ri";
 import { BarLoader } from 'react-spinners';
 import { BiArrowBack } from 'react-icons/bi';
-import '../../css/Shared.css'
-import '../../css/Closet.css';
+import '../css/Shared.css'
+import '../css/Closet.css';
 
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
@@ -17,15 +17,16 @@ const breakPoints = [
     { width: 1200, itemsToShow: 5 },
 ];
 
-function ManualGenerate(props) {
+function OutfitView(props) {
 
+    const [addOutfitItem, setAddOutfitItem] = useState(false)
     const [loading, setLoading] = useState(false)
     const [result, setResult] = useState({})
     const [outfitName, setOutfitName] = useState('')
     const [selectedItem, setSelectedItem] = useState(null)
+    const [del, setDel] = useState(false)
 
-    let bucket = require('../../env.json')
-
+    let bucket = require('../env.json')
     const titleStyle = {
         position: 'relative',
         marginTop: '-1rem',
@@ -34,28 +35,32 @@ function ManualGenerate(props) {
 
     // returns to add item / clothing view
     function goBack() {
-        props.setAddItem(false)
+        setAddOutfitItem(false)
     }
 
     // exits the window
     function exitWindow() {
         props.reset()
-        props.setOutfitItems([])
+        props.setOutfitView(null)
     }
 
     // TODO:
     async function saveOutfit() {
         setLoading(true)
-        let res = await props.submitOutfit(outfitName)
+        let name = outfitName === '' ? null : outfitName
+        let res = await props.updateOutfit(name)
         setResult(res)
         setLoading(false)
     }
 
     function addItem(newItem) {
-        let currItems = [...props.outfitItems]
-        currItems.push(newItem)
+        let currItems
+        props.outfitItems.length === 0 ?
+            currItems = [...props.outfit.items] :
+            currItems = [...props.outfitItems]
+        currItems.push(newItem.id)
         props.setOutfitItems(currItems)
-        props.setAddItem(false)
+        setAddOutfitItem(false)
     }
 
     function selectItem(item) {
@@ -67,17 +72,29 @@ function ManualGenerate(props) {
     }
 
     function removeItem() {
-        let currItems = [...props.outfitItems]
+        let currItems
+        props.outfitItems.length === 0 ?
+            currItems = [...props.outfit.items] :
+            currItems = [...props.outfitItems]
         let index = currItems.indexOf(selectedItem)
         currItems.splice(index, 1)
         props.setOutfitItems(currItems)
         setSelectedItem(null)
     }
 
+    async function deleteOutfit () {
+        console.log('deleting outfit...')
+        setLoading(true)
+        await props.deleteOutfit()
+        setLoading(false)
+        props.setOutfitView(null)
+    }
+
+
     return (
-        props.addItem === false ?
+        addOutfitItem === false ?
             (
-                <ScrollView
+                <View
                     position="fixed"
                     height="fit-content"
                     width="60%"
@@ -106,7 +123,7 @@ function ManualGenerate(props) {
                         <h2
                             className='header'
                         >
-                            Add Outfit
+                            View Outfit
                         </h2 >
                     </View >
                     <View
@@ -119,9 +136,9 @@ function ManualGenerate(props) {
                         textAlign="center"
                     >
                         <TextField
-                        placeholder="Enter a name for your outfit"
-                        value={outfitName === '' ? null : outfitName}
-                        onChange={(e) => setOutfitName(e.nativeEvent.target.value)}
+                            placeholder="Enter a name for your outfit"
+                            value={outfitName === '' ? props.outfit.name : outfitName}
+                            onChange={(e) => setOutfitName(e.nativeEvent.target.value)}
                         />
                     </View>
                     <View
@@ -134,18 +151,18 @@ function ManualGenerate(props) {
                         {
                             selectedItem === null ? (
                                 <Button
-                                onClick={() => props.setAddItem(true)}
-                                id="add-button"
-                            >
-                                <IoAdd />
-                            </Button>
+                                    onClick={() => setAddOutfitItem(true)}
+                                    id="add-button"
+                                >
+                                    <IoAdd />
+                                </Button>
                             ) : (
                                 <Button
-                                onClick={() => removeItem()}
-                                id="cancel-button"
-                            >
-                                <RiSubtractFill />
-                            </Button>
+                                    onClick={() => removeItem()}
+                                    id="cancel-button"
+                                >
+                                    <RiSubtractFill />
+                                </Button>
                             )
                         }
                     </View>
@@ -158,7 +175,7 @@ function ManualGenerate(props) {
                     >
                         <TabItem title="Items">
                             {
-                                props.outfitItems.length === 0 ? (
+                                props.outfit.items.length === 0 ? (
                                     <View
                                         position="relative"
                                         style={{ marginTop: '4rem', marginBottom: '4rem' }}
@@ -170,18 +187,32 @@ function ManualGenerate(props) {
                                     <ScrollView>
                                         <Flex>
                                             <Carousel breakPoints={breakPoints}>
-                                                {props.outfitItems.map((item, index) => (
-                                                    <Card
-                                                        id={selectedItem === item ? "selectedClothingCard" : "clothingCard"}
-                                                        key={index}
-                                                        onClick={() => selectItem(item)}
-                                                    >
-                                                        <Image
-                                                            className='responsive'
-                                                            src={bucket.REACT_APP_BUCKET_URL + item.id}
-                                                        />
-                                                    </Card>
-                                                ))
+                                                {
+                                                    props.outfitItems.length === 0 ? (
+                                                        props.outfit.items.map((item, index) => (
+                                                            <Card
+                                                                id={selectedItem === item ? "selectedClothingCard" : "clothingCard"}
+                                                                key={index}
+                                                                onClick={() => selectItem(item)}
+                                                            >
+                                                                <Image
+                                                                    className='responsive'
+                                                                    src={bucket.REACT_APP_BUCKET_URL + item}
+                                                                />
+                                                            </Card>
+                                                        ))) : (
+                                                        props.outfitItems.map((item, index) => (
+                                                            <Card
+                                                                id={selectedItem === item ? "selectedClothingCard" : "clothingCard"}
+                                                                key={index}
+                                                                onClick={() => selectItem(item)}
+                                                            >
+                                                                <Image
+                                                                    className='responsive'
+                                                                    src={bucket.REACT_APP_BUCKET_URL + item}
+                                                                />
+                                                            </Card>
+                                                        )))
                                                 }
                                             </Carousel>
                                         </Flex>
@@ -252,24 +283,66 @@ function ManualGenerate(props) {
                             justifyContent="space-evenly"
                         >
                             <Button
-                                onClick={exitWindow}
+                                onClick={() => setDel(true)}
                                 id="cancel-button"
                             >
-                                Cancel
+                                Delete
                             </Button>
                             <Button
                                 onClick={saveOutfit}
                                 id="add-button"
                             >
-                                Save Outfit
+                                Save
                             </Button>
                         </Flex>
                     </View>
+                    {
+                del === true ? (
+                    <View
+                        textAlign="center"
+                    >
+                        <h5
+                            style={{ color: 'darkred', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}
+                        >
+                            This operation will delete this outfit from your closet and cannot be undone.
+                            Would you like to proceed?
+                        </h5>
+                        <Flex
+                            position={"relative"}
+                            width="90%"
+                            height="fit-content"
+                            direction="row"
+                            justifyContent="space-evenly"
+                            alignItems="center"
+                            marginLeft={"auto"}
+                            marginRight={"auto"}
+                            marginBottom={"1.5rem"}
 
-                </ScrollView >
+                        >
+                            <Button
+                                id='cancel-button'
+                                onClick={() => setDel(false)}
+                            >
+                                No
+                            </Button>
+                            <Button
+                                id='add-button'
+                                onClick={() => deleteOutfit()}
+                            >
+                                Yes
+                            </Button>
+                        </Flex>
+                    </View>
+                )
+                    : (
+                        null
+                    )
+            }
+
+                </View >
             )
             : (
-                props.addItem === true ? (
+                addOutfitItem === true ? (
                     <View
                         position="fixed"
                         height="fit-content"
@@ -471,4 +544,4 @@ function ManualGenerate(props) {
     )
 }
 
-export default ManualGenerate;
+export default OutfitView;

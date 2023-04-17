@@ -13,10 +13,11 @@ import ManualGenerate from './Components/add_functionality/ManualOutfit';
 import SavedOutfits from './Components/Display/SavedOutfits';
 import MyCloset from './Components/Display/MyCloset';
 import ItemView from './Components/ItemView';
+import OutfitView from './Components/OutfitView';
 import { graphqlOperation } from 'aws-amplify';
 import {
   createClothing, deleteClothing, updateClothing,
-  createOutfit, deleteOutfit, createOutfitItem
+  createOutfit, updateOutfit, deleteOutfit
 } from './graphql/mutations';
 import { listClothing, listOutfits, getOutfit } from './graphql/queries';
 
@@ -55,7 +56,7 @@ function App({ signOut, user }) {
   // state for outfits
   const [outfits, setOutfits] = useState([])
   const [outfitItems, setOutfitItems] = useState([])
-
+  const [outfitView, setOutfitView] = useState(null)
 
   function resetGenerate() {
     setSelected("")
@@ -106,7 +107,7 @@ function App({ signOut, user }) {
       } catch (err) {
         console.log(err)
         return {
-          "error": "Error adding item"
+          "error": "Error adding outfit"
         }
       }
     } else {
@@ -233,48 +234,105 @@ function App({ signOut, user }) {
   }
 
 
-  async function submitOutfit() {
+  async function submitOutfit(outfitName) {
 
     if (outfitItems.length > 0) {
       try {
 
+        console.log(outfitItems)
+
+        let stringArr = []
+        for (const item of outfitItems) {
+          stringArr.push(item.id)
+        }
+
+        const itemId = uuidv4()
+
         //Creates the outfit
         const outfit = await API.graphql(graphqlOperation(createOutfit, {
           input: {
-            name: "Test1"
+            id: itemId,
+            name: outfitName,
+            items: [...stringArr]
           }
         }));
-
-        // Must do this for every clothing item (maybe for loop for each clothing item) 
-        for (const item of outfitItems) {
-          console.log('adding item ', item.id)
-          await API.graphql(graphqlOperation(createOutfitItem, {
-            input: {
-              clothingId: item.id,
-              outfitId: outfit.data.createOutfit.id
-            }
-          }));
-        }
 
         // update user closet information
         await updateOutfits()
 
+        return {
+          "success": "Outfit Added"
+        }
+
       } catch (err) {
         console.log(err)
+        return {
+          "error": "Outfit Added"
+        }
       }
     }
   }
 
-
-  async function deleteOutfit() {
-    const deletedItem = await API.graphql({
-      query: deleteOutfit,
-      variables: {
-        input: {
-          id: "YOUR_RECORD_ID"
-        }
+  async function updateClosetOutfit(name) {
+    try {
+      let outfitInput = {
+        id: outfitView.id,
+        name: name === null ? outfitView.name : name,
+        items: outfitItems.length > 0 ? outfitItems : outfitView.items
       }
-    });
+
+      console.log(outfitInput)
+
+      const res = await API.graphql(graphqlOperation(
+        updateOutfit, {
+          input: outfitInput
+        }
+      ))
+
+      console.log(res)
+
+      // update user closet information
+      await updateOutfits()
+
+      return {
+        "success": "Outfit updated"
+      }
+    } catch (err) {
+      console.log(err)
+      return {
+        "error": "Error updating outfit"
+      }
+    }
+  }
+
+  async function deleteClosetOutfit() {
+
+    try {
+      const deletedItem = await API.graphql({
+        query: deleteOutfit,
+        variables: {
+          input: {
+            id: outfitView.id
+          }
+        }
+      });
+
+      console.log(deletedItem)
+
+      // update user closet information
+      await updateOutfits()
+
+      return {
+        "success": "Outfit deleted successfully"
+      }
+
+    } catch (err) {
+      console.log(err)
+      return {
+        "error": "Error deleting outfit"
+      }
+    }
+
   }
 
   async function updateOutfits() {
@@ -283,22 +341,7 @@ function App({ signOut, user }) {
         query: listOutfits
       })
 
-      console.log(res)
-
-      for (const item of res.data.listOutfits.items) {
-        console.log(item.id)
-        const result = await API.graphql({
-          query: getOutfit,
-          variables: {
-            input: {
-              id: item.id
-            }
-          }
-        });
-        console.log(result)
-      }
-
-      setOutfits([...res.data.listOutfits.items])
+      setOutfits(res.data.listOutfits.items)
     } catch (err) {
       console.log(err)
     }
@@ -327,6 +370,9 @@ function App({ signOut, user }) {
       >
         <SavedOutfits
           savedOutfits={outfits}
+          setOutfitView={setOutfitView}
+
+
         />
         <MyCloset
           shoes={shoes}
@@ -348,6 +394,26 @@ function App({ signOut, user }) {
             setItemView={setItemView}
             deleteItem={deleteItem}
             updateItem={updateOutfitItem}
+          />
+        ) : (
+          null
+        )
+      }
+      {
+        outfitView !== null ? (
+          <OutfitView
+            reset={resetGenerate}
+            outfit={outfitView}
+            setOutfitView={setOutfitView}
+            deleteOutfit={deleteClosetOutfit}
+            shoes={shoes}
+            bottoms={bottoms}
+            tops={tops}
+            outerwear={outerwear}
+            accessories={accessories}
+            outfitItems={outfitItems}
+            setOutfitItems={setOutfitItems}
+            updateOutfit={updateClosetOutfit}
           />
         ) : (
           null

@@ -25,6 +25,12 @@ function SavedOutfits(props) {
 
     console.log(props.savedOutfits)
 
+    function setOutfit (outfit) {
+        console.log(outfit)
+        props.setOutfitView(outfit)
+        console.log('should be updated...')
+    }
+
     return (
         <View
             height="45%"
@@ -47,49 +53,60 @@ function SavedOutfits(props) {
                     Saved Outfits
                 </h2>
             </View>
-            <Tabs>
-                {
-                    props.savedOutfits.length === 0 ? (
-                        <TabItem title="Outfit">
-                            <View
-                                textAlign="center"
-                                position="relative"
-                                marginTop="8rem"
-                            >
-                                <h3
-                                    className='header'
-                                > Select 'Add Outfit' to add an outfit to your closet </h3>
-                            </View>
-                        </TabItem>
-                    ) : (
-                            props.savedOutfits.map((outfit) => (
-                                <TabItem title={outfit.name}>
-                                <Carousel breakPoints={breakPoints}>
-                                    {
-                                        /* 
-                                        * TODO:
-                                        * Issue in here that needs to be figured out.
-                                        */
-                                        // outfit.map((item, index) => (
-                                        //     <Card
-                                        //         id="clothingCard"
-                                        //         key={index}
-                                        //         onClick={() => console.log('click')}
-                                        //     >
-                                        //         <Image
-                                        //             className='responsive'
-                                        //             src={bucket.REACT_APP_BUCKET_URL + item.id}
-                                        //         />
-                                        //     </Card>
-                                        // ))
-                                    }
+            <View
+                position="relative"
+                width="90%"
+                marginLeft="auto"
+                marginRight="auto"
+                height=""
+            >
+                <Tabs>
+                    {
+                        props.savedOutfits.length === 0 ? (
+                            <TabItem title="Outfit">
+                                <View
+                                    textAlign="center"
+                                    position="relative"
+                                    marginTop="8rem"
+                                    width="95%"
+                                    marginLeft="auto"
+                                    marginRight="auto"
+                                >
+                                    <h3
+                                        className='header'
+                                    > Select 'Add Outfit' to add an outfit to your closet </h3>
+                                </View>
+                            </TabItem>
+                        ) : (
+                            props.savedOutfits.map((outfit, index) => (
+                                <TabItem title={outfit.name} key={index}>
+                                    <Carousel breakPoints={breakPoints}>
+                                        {
+                                            /* 
+                                            * TODO:
+                                            * Issue in here that needs to be figured out.
+                                            */
+                                            outfit.items.map((item, index) => (
+                                                <Card
+                                                    id="clothingCard"
+                                                    key={index}
+                                                    onClick={() => setOutfit(outfit)}
+                                                >
+                                                    <Image
+                                                        className='responsive'
+                                                        src={bucket.REACT_APP_BUCKET_URL + item}
+                                                    />
+                                                </Card>
+                                            ))
+                                        }
                                     </Carousel>
-                                    </TabItem>
+                                </TabItem>
                             ))
-                    )
-                }
-            </Tabs>
-        </View>
+                        )
+                    }
+                </Tabs>
+            </View>
+        </View >
     )
 }
 

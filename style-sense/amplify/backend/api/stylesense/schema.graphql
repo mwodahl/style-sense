@@ -13,7 +13,6 @@ type Clothing @model
   weather: [String]
   occasion: [String]
   description: String!
-  outfits: [Outfit] @manyToMany(relationName: "OutfitItem")
 }
 
 type Outfit @model
@@ -21,5 +20,5 @@ type Outfit @model
  {
   id: ID!
   name: String!
-  items: [Clothing] @manyToMany(relationName: "OutfitItem")
+  items: [String]
 }

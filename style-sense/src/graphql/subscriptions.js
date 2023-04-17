@@ -15,9 +15,6 @@ export const onCreateClothing = /* GraphQL */ `
       weather
       occasion
       description
-      outfits {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
@@ -38,9 +35,6 @@ export const onUpdateClothing = /* GraphQL */ `
       weather
       occasion
       description
-      outfits {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
@@ -61,9 +55,6 @@ export const onDeleteClothing = /* GraphQL */ `
       weather
       occasion
       description
-      outfits {
-        nextToken
-      }
       createdAt
       updatedAt
       owner
@@ -78,9 +69,7 @@ export const onCreateOutfit = /* GraphQL */ `
     onCreateOutfit(filter: $filter, owner: $owner) {
       id
       name
-      items {
-        nextToken
-      }
+      items
       createdAt
       updatedAt
       owner
@@ -95,9 +84,7 @@ export const onUpdateOutfit = /* GraphQL */ `
     onUpdateOutfit(filter: $filter, owner: $owner) {
       id
       name
-      items {
-        nextToken
-      }
+      items
       createdAt
       updatedAt
       owner
@@ -112,114 +99,7 @@ export const onDeleteOutfit = /* GraphQL */ `
     onDeleteOutfit(filter: $filter, owner: $owner) {
       id
       name
-      items {
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onCreateOutfitItem = /* GraphQL */ `
-  subscription OnCreateOutfitItem(
-    $filter: ModelSubscriptionOutfitItemFilterInput
-    $owner: String
-  ) {
-    onCreateOutfitItem(filter: $filter, owner: $owner) {
-      id
-      clothingId
-      outfitId
-      clothing {
-        id
-        image
-        name
-        type
-        color
-        weather
-        occasion
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      outfit {
-        id
-        name
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdateOutfitItem = /* GraphQL */ `
-  subscription OnUpdateOutfitItem(
-    $filter: ModelSubscriptionOutfitItemFilterInput
-    $owner: String
-  ) {
-    onUpdateOutfitItem(filter: $filter, owner: $owner) {
-      id
-      clothingId
-      outfitId
-      clothing {
-        id
-        image
-        name
-        type
-        color
-        weather
-        occasion
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      outfit {
-        id
-        name
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeleteOutfitItem = /* GraphQL */ `
-  subscription OnDeleteOutfitItem(
-    $filter: ModelSubscriptionOutfitItemFilterInput
-    $owner: String
-  ) {
-    onDeleteOutfitItem(filter: $filter, owner: $owner) {
-      id
-      clothingId
-      outfitId
-      clothing {
-        id
-        image
-        name
-        type
-        color
-        weather
-        occasion
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      outfit {
-        id
-        name
-        createdAt
-        updatedAt
-        owner
-      }
+      items
       createdAt
       updatedAt
       owner
