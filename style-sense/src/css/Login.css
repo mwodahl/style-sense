@@ -1,0 +1,78 @@
+.text {
+    color: #22223b;
+}
+
+#root {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.background {
+    background-color: #5D4954;
+}
+
+button.amplify-button.amplify-field-group__control.amplify-button--primary.amplify-button--fullwidth {
+    background-color: #c9ada7;
+}
+
+button.amplify-button.amplify-field-group__control.amplify-button--primary.amplify-button--fullwidth:hover {
+    background-color: #5D4954;
+    color: white
+}
+
+[data-amplify-authenticator][data-variation=modal] {
+    background-color: #5D4954;
+}
+
+--amplify-components-tabs-item-active-color {
+    color: #c9ada7;
+}
+
+.amplify-tabs-item[data-state=active] {
+    border-color: #c9ada7;
+    color: #c9ada7;
+}
+
+.amplify-tabs-item:hover{
+    border-color: #c9ada7;
+    color: #c9ada7;
+}
+
+.amplify-button--link {
+    color: #5D4954;
+}
+
+.amplify-button--link:hover  {
+    background-color: rgb(93,73,84, 0.3);
+    color: #5D4954;
+}
+
+.amplify-field-group__outer-end .amplify-field-group__control:hover {
+    border-color: #5D4954;
+    background-color: rgb(93,73,84, 0.3);
+    color: #5D4954;
+}
+
+--amplify-internal-button-loading-background-color {
+    background-color: #5D4954;
+    color: white;
+}
+
+--amplify-button--loading {
+    background-color: #5D4954;
+    color: white;
+}
+
+--amplify-button--loading:hover {
+    background-color: #5D4954;
+    color: white;
+}
+
+button.amplify-button.amplify-field-group__control.amplify-button.amplify-button--menu.amplify-menu-content__item.profileOption:hover {
+    background-color: #5D4954;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button.amplify-button.amplify-field-group__control.amplify-button.amplify-button--menu.amplify-menu-content__item.profileOption {
+    font-family: 'Montserrat', sans-serif;
+}

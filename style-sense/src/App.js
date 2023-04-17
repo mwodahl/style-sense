@@ -20,6 +20,7 @@ import {
   createOutfit, updateOutfit, deleteOutfit
 } from './graphql/mutations';
 import { listClothing, listOutfits } from './graphql/queries';
+import './css/Login.css';
 
 function App({ signOut, user }) {
 
