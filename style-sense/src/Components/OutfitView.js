@@ -9,16 +9,9 @@ import { BiArrowBack } from 'react-icons/bi';
 import '../css/Shared.css'
 import '../css/Closet.css';
 
-const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 600, itemsToShow: 2 },
-    { width: 900, itemsToShow: 3 },
-    { width: 1050, itemsToShow: 4 },
-    { width: 1200, itemsToShow: 5 },
-];
-
 function OutfitView(props) {
 
+    // state variables
     const [addOutfitItem, setAddOutfitItem] = useState(false)
     const [loading, setLoading] = useState(false)
     const [result, setResult] = useState({})
@@ -26,17 +19,30 @@ function OutfitView(props) {
     const [selectedItem, setSelectedItem] = useState(null)
     const [del, setDel] = useState(false)
 
+    // pulling in the 'env' file
     let bucket = require('../env.json')
+
+    // style objects
     const titleStyle = {
         position: 'relative',
         marginTop: '-1rem',
         marginBottom: '2rem',
     }
 
+    const breakPoints = [
+        { width: 1, itemsToShow: 1 },
+        { width: 600, itemsToShow: 2 },
+        { width: 900, itemsToShow: 3 },
+        { width: 1050, itemsToShow: 4 },
+        { width: 1200, itemsToShow: 5 },
+    ];
+
+
     // returns to add item / clothing view
     function goBack() {
         setAddOutfitItem(false)
     }
+
 
     // exits the window
     function exitWindow() {
@@ -44,7 +50,7 @@ function OutfitView(props) {
         props.setOutfitView(null)
     }
 
-    // TODO:
+    // saves a generated outfit
     async function saveOutfit() {
         setLoading(true)
         let name = outfitName === '' ? null : outfitName
@@ -82,7 +88,7 @@ function OutfitView(props) {
         setSelectedItem(null)
     }
 
-    async function deleteOutfit () {
+    async function deleteOutfit() {
         console.log('deleting outfit...')
         setLoading(true)
         await props.deleteOutfit()
@@ -90,6 +96,8 @@ function OutfitView(props) {
         props.setOutfitView(null)
     }
 
+    console.log('outfit view props: ', props.outfitItems)
+    console.log('outfit items: ', props.outfit.items)
 
     return (
         addOutfitItem === false ?
@@ -99,7 +107,7 @@ function OutfitView(props) {
                     height="fit-content"
                     width="60%"
                     left="20%"
-                    top="10%"
+                    top="15%"
                     backgroundColor="#FFFFFF"
                     borderRadius="10px"
                     boxShadow={'10px 10px 40px 0px #22223b'}
@@ -279,7 +287,7 @@ function OutfitView(props) {
                         marginBottom="2rem"
                     >
                         <Flex
-                            flexDirection="row"
+                            flexdirection="row"
                             justifyContent="space-evenly"
                         >
                             <Button
@@ -297,47 +305,47 @@ function OutfitView(props) {
                         </Flex>
                     </View>
                     {
-                del === true ? (
-                    <View
-                        textAlign="center"
-                    >
-                        <h5
-                            style={{ color: 'darkred', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}
-                        >
-                            This operation will delete this outfit from your closet and cannot be undone.
-                            Would you like to proceed?
-                        </h5>
-                        <Flex
-                            position={"relative"}
-                            width="90%"
-                            height="fit-content"
-                            direction="row"
-                            justifyContent="space-evenly"
-                            alignItems="center"
-                            marginLeft={"auto"}
-                            marginRight={"auto"}
-                            marginBottom={"1.5rem"}
+                        del === true ? (
+                            <View
+                                textAlign="center"
+                            >
+                                <h5
+                                    style={{ color: 'darkred', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold' }}
+                                >
+                                    This operation will delete this outfit from your closet and cannot be undone.
+                                    Would you like to proceed?
+                                </h5>
+                                <Flex
+                                    position={"relative"}
+                                    width="90%"
+                                    height="fit-content"
+                                    direction="row"
+                                    justifyContent="space-evenly"
+                                    alignItems="center"
+                                    marginLeft={"auto"}
+                                    marginRight={"auto"}
+                                    marginBottom={"1.5rem"}
 
-                        >
-                            <Button
-                                id='cancel-button'
-                                onClick={() => setDel(false)}
-                            >
-                                No
-                            </Button>
-                            <Button
-                                id='add-button'
-                                onClick={() => deleteOutfit()}
-                            >
-                                Yes
-                            </Button>
-                        </Flex>
-                    </View>
-                )
-                    : (
-                        null
-                    )
-            }
+                                >
+                                    <Button
+                                        id='cancel-button'
+                                        onClick={() => setDel(false)}
+                                    >
+                                        No
+                                    </Button>
+                                    <Button
+                                        id='add-button'
+                                        onClick={() => deleteOutfit()}
+                                    >
+                                        Yes
+                                    </Button>
+                                </Flex>
+                            </View>
+                        )
+                            : (
+                                null
+                            )
+                    }
 
                 </View >
             )

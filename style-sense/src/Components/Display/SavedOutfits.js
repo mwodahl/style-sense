@@ -4,31 +4,23 @@ import Carousel from "react-elastic-carousel";
 import '../../css/Closet.css';
 import '../../css/Shared.css';
 
-const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 600, itemsToShow: 2 },
-    { width: 900, itemsToShow: 3 },
-    { width: 1050, itemsToShow: 4 },
-    { width: 1200, itemsToShow: 5 },
-];
-
 function SavedOutfits(props) {
 
-    // Note:
-    // Add carousel
-    // Add props functionality for viewing / modifying an outfit
+    // carousel settings
+    const breakPoints = [
+        { width: 1, itemsToShow: 1 },
+        { width: 600, itemsToShow: 2 },
+        { width: 900, itemsToShow: 3 },
+        { width: 1050, itemsToShow: 4 },
+        { width: 1200, itemsToShow: 5 },
+    ];
 
-    // onClick -> set outfitView to be the outfit that was clicked...
-    // allow users to modify the outfit in manual
-
+    // import 'env' file
     let bucket = require('../../env.json')
 
-    console.log(props.savedOutfits)
-
-    function setOutfit (outfit) {
+    function setOutfit(outfit) {
         console.log(outfit)
         props.setOutfitView(outfit)
-        console.log('should be updated...')
     }
 
     return (
@@ -82,10 +74,6 @@ function SavedOutfits(props) {
                                 <TabItem title={outfit.name} key={index}>
                                     <Carousel breakPoints={breakPoints}>
                                         {
-                                            /* 
-                                            * TODO:
-                                            * Issue in here that needs to be figured out.
-                                            */
                                             outfit.items.map((item, index) => (
                                                 <Card
                                                     id="clothingCard"

@@ -4,18 +4,21 @@ import Carousel from "react-elastic-carousel";
 import '../../css/Closet.css';
 import '../../css/Shared.css'
 
-const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 600, itemsToShow: 2 },
-    { width: 900, itemsToShow: 3 },
-    { width: 1050, itemsToShow: 4 },
-    { width: 1200, itemsToShow: 5 },
-];
-
 function MyCloset(props) {
 
+    // carousel settings
+    const breakPoints = [
+        { width: 1, itemsToShow: 1 },
+        { width: 600, itemsToShow: 2 },
+        { width: 900, itemsToShow: 3 },
+        { width: 1050, itemsToShow: 4 },
+        { width: 1200, itemsToShow: 5 },
+    ];
+
+    // import 'env' file
     let bucket = require('../../env.json')
 
+    // set item view
     const setView = (type, index) => {
         switch (type) {
             case "shoes":

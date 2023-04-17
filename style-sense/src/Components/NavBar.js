@@ -7,9 +7,17 @@ import { BsCloudRain } from "react-icons/bs";
 import { BsCloud } from "react-icons/bs";
 import { BsCloudSnow } from "react-icons/bs";
 import { IoSunnyOutline } from "react-icons/io5";
+import { PulseLoader } from 'react-spinners';
 
 function NavBar(props) {
 
+  // component state objects
+  const [data, setData] = useState({});
+  const [lat, setLat] = useState({});
+  const [lon, setLon] = useState({});
+
+
+  // component style objects
   const profileStyle = {
     color: '#F0F6F6',
     borderRadius: '50%',
@@ -29,28 +37,28 @@ function NavBar(props) {
     borderRadius: '5px'
   }
 
-  const [data, setData] = useState({});
-  const [lat, setLat] = useState({});
-  const [lon, setLon] = useState({});
-  navigator.geolocation.getCurrentPosition(function (position) {
-    setLat(position.coords.latitude.toString());
-    setLon(position.coords.longitude.toString());
-  });
-
-  const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=e2ab1469ff86523278c10e93f6baf4b3&units=imperial";
-  console.log(url)
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, [url]);
-
   const iconMap = {
     "Rain": <BsCloudRain size={'2.5rem'} />,
     "Clouds": <BsCloud size={'2.5rem'} />,
     "Snow": <BsCloudSnow size={'2.5rem'} />,
     "Clear": <IoSunnyOutline size={'2.5rem'} />
   }
+
+
+  // grab user's location
+  navigator.geolocation.getCurrentPosition(function (position) {
+    setLat(position.coords.latitude.toString());
+    setLon(position.coords.longitude.toString());
+  });
+
+
+  // fetch weather data
+  const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=e2ab1469ff86523278c10e93f6baf4b3&units=imperial";
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, [url]);
 
 
   return (
@@ -73,41 +81,57 @@ function NavBar(props) {
           width="calc(100% / 3)"
           className='background'
         >
-            <Flex
-              direction="row"
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-              <View>
-              <Image
-              marginTop={'-1rem'}
-              marginLeft={'1rem'}
-              maxWidth={'9rem'}
-              maxHeight={'100%'}
-              src={Logo}
-              />
-              </View>
-            </Flex>
-          </Card>
-          <Card
-            height="100%"
-            width="calc(100% / 3)"
-            className='background'>
           <Flex
             direction="row"
-            justifyContent="space-evenly"
+            justifyContent="flex-start"
             alignItems="center"
           >
-            <View className="weather">
-              {data.weather ? iconMap[data.weather[0].main] : null}
-            </View>
-            <View className="weather">
-              {data.name ? <h2>{data.name}</h2> : null}
-            </View>
-            <View className="weather">
-              {data.main ? <h2>{data.main.temp.toFixed()}°F</h2> : null}
+            <View>
+              <Image
+                marginTop={'-1rem'}
+                marginLeft={'1rem'}
+                maxWidth={'9rem'}
+                maxHeight={'100%'}
+                src={Logo}
+              />
             </View>
           </Flex>
+        </Card>
+        <Card
+          height="100%"
+          width="calc(100% / 3)"
+          className='background'>
+          {
+            data.weather === undefined ?
+              (
+                <View
+                  display='Flex'
+                  height='100%'
+                  width='100%'
+                  justifyContent='center'
+                  alignItems='center'
+                >
+                  <PulseLoader color={'white'} size={20} speedMultiplier={'0.5'} />
+                </View>
+              )
+              : (
+                <Flex
+                  direction="row"
+                  justifyContent="space-evenly"
+                  alignItems="center"
+                >
+                  <View className="weather">
+                    {data.weather ? iconMap[data.weather[0].main] : null}
+                  </View>
+                  <View className="weather">
+                    {data.name ? <h2>{data.name}</h2> : null}
+                  </View>
+                  <View className="weather">
+                    {data.main ? <h2>{data.main.temp.toFixed()}°F</h2> : null}
+                  </View>
+                </Flex>
+              )
+          }
         </Card>
         <Card
           height="100%"

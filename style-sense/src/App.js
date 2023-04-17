@@ -19,10 +19,11 @@ import {
   createClothing, deleteClothing, updateClothing,
   createOutfit, updateOutfit, deleteOutfit
 } from './graphql/mutations';
-import { listClothing, listOutfits, getOutfit } from './graphql/queries';
+import { listClothing, listOutfits } from './graphql/queries';
 
 function App({ signOut, user }) {
 
+  // navigation state items
   const [selected, setSelected] = useState("");
   const [manualGenerate, setManualGenerate] = useState(null);
   const [generateOutfit, setGenerateOutfit] = useState(null);
@@ -66,6 +67,7 @@ function App({ signOut, user }) {
     setOccasion("")
   }
 
+  // functions to add/delete/update clothing items
   async function addItem() {
     if (
       imageFile !== null &&
@@ -122,7 +124,7 @@ function App({ signOut, user }) {
 
     // remove item from database on id
     try {
-      const deletedItem = await API.graphql({
+      await API.graphql({
         query: deleteClothing,
         variables: {
           input: {
@@ -130,8 +132,6 @@ function App({ signOut, user }) {
           }
         }
       });
-
-      console.log(deletedItem)
 
       //remove image from s3 bucket
       await Storage.remove(itemID);
@@ -184,6 +184,7 @@ function App({ signOut, user }) {
   }
 
 
+  // pulls in user item information
   async function onLogin() {
     const res = await API.graphql({
       query: listClothing
@@ -234,12 +235,11 @@ function App({ signOut, user }) {
   }
 
 
+  // functions to add/delete/update outfits
   async function submitOutfit(outfitName) {
 
     if (outfitItems.length > 0) {
       try {
-
-        console.log(outfitItems)
 
         let stringArr = []
         for (const item of outfitItems) {
@@ -249,7 +249,7 @@ function App({ signOut, user }) {
         const itemId = uuidv4()
 
         //Creates the outfit
-        const outfit = await API.graphql(graphqlOperation(createOutfit, {
+        await API.graphql(graphqlOperation(createOutfit, {
           input: {
             id: itemId,
             name: outfitName,
@@ -281,8 +281,6 @@ function App({ signOut, user }) {
         items: outfitItems.length > 0 ? outfitItems : outfitView.items
       }
 
-      console.log(outfitInput)
-
       const res = await API.graphql(graphqlOperation(
         updateOutfit, {
           input: outfitInput
@@ -308,7 +306,7 @@ function App({ signOut, user }) {
   async function deleteClosetOutfit() {
 
     try {
-      const deletedItem = await API.graphql({
+      await API.graphql({
         query: deleteOutfit,
         variables: {
           input: {
@@ -316,8 +314,6 @@ function App({ signOut, user }) {
           }
         }
       });
-
-      console.log(deletedItem)
 
       // update user closet information
       await updateOutfits()
@@ -335,6 +331,8 @@ function App({ signOut, user }) {
 
   }
 
+
+  // pulls back updated outfit list
   async function updateOutfits() {
     try {
       const res = await API.graphql({
@@ -346,6 +344,7 @@ function App({ signOut, user }) {
       console.log(err)
     }
   }
+
 
   // pull in user info after login
   if (!userInfo) {
@@ -456,6 +455,13 @@ function App({ signOut, user }) {
             loading={loading}
             setLoading={setLoading}
             reset={resetGenerate}
+            shoes={shoes}
+            bottoms={bottoms}
+            tops={tops}
+            outerwear={outerwear}
+            accessories={accessories}
+            submitOutfit={submitOutfit}
+            setOutfitItems={setOutfitItems}
           />
         ) : (
           (selected === "Add Outfit" && manualGenerate === true) ? (

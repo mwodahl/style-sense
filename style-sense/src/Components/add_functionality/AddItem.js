@@ -8,20 +8,19 @@ import '../../css/Shared.css'
 
 function AddItem(props) {
 
-    // TODO:
-    // Styling. 
-
+    // component state objects
     const [result, setResult] = useState({})
     const [loading, setLoading] = useState(false)
 
+    // file handling for image submission
     const fileTypes = [
         "JPG", "PNG", "JPEG"
     ]
-
     const handleFile = (file) => {
         props.setImageFile(file)
     }
 
+    // cancels item submission
     function cancelItem() {
         props.setSelected("")
         props.setImageFile(null)
@@ -36,12 +35,14 @@ function AddItem(props) {
         })
     }
 
+    // updates item state
     function updateValue(type, value) {
         let item = props.item
         item[type] = value
         props.setItem(item)
     }
 
+    // submits item to database
     async function submitItem() {
         setLoading(true)
         const res = await props.addItem()
@@ -85,13 +86,13 @@ function AddItem(props) {
                     textAlign="center"
                     position="relative"
                     marginBottom="1rem"
-                    >
+                >
                     <h2
-                    className='header'
+                        className='header'
                     >
                         Add Item
                     </h2>
-            </View> 
+                </View>
                 <View
                     position="relative"
                     marginBottom='1rem'

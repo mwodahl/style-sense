@@ -6,19 +6,19 @@ import '../css/Menu.css'
 
 
 function Menu(props) {
-    
+
     // create a map of icons to be used in the menu
     const iconMap = {
-        "Add Item": (< IoAdd id="menu-icon"  />),
+        "Add Item": (< IoAdd id="menu-icon" />),
         "Add Outfit": (< IoShirtSharp id="menu-icon" />),
     }
 
     // if the selected item is the same as the item that was clicked, then set the selected item to ""
     // else set the selected item to the item that was clicked
     function handleClick(item) {
-        props.selected === item ? 
-        props.setSelected("") :
-        props.setSelected(item)
+        props.selected === item ?
+            props.setSelected("") :
+            props.setSelected(item)
     }
 
     // return the menu component
@@ -53,7 +53,7 @@ function Menu(props) {
                                 iconMap[item]
                             }
                             <h3
-                            className="text"
+                                className="text"
                             >{item}</h3>
                         </Flex>
                     </Card>))}

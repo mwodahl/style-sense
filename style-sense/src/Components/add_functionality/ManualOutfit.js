@@ -9,22 +9,25 @@ import { BiArrowBack } from 'react-icons/bi';
 import '../../css/Shared.css'
 import '../../css/Closet.css';
 
-const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 600, itemsToShow: 2 },
-    { width: 900, itemsToShow: 3 },
-    { width: 1050, itemsToShow: 4 },
-    { width: 1200, itemsToShow: 5 },
-];
-
 function ManualGenerate(props) {
 
+    // component state objects
     const [loading, setLoading] = useState(false)
     const [result, setResult] = useState({})
     const [outfitName, setOutfitName] = useState('')
     const [selectedItem, setSelectedItem] = useState(null)
 
+    // import 'env' file
     let bucket = require('../../env.json')
+
+    // component style objects
+    const breakPoints = [
+        { width: 1, itemsToShow: 1 },
+        { width: 600, itemsToShow: 2 },
+        { width: 900, itemsToShow: 3 },
+        { width: 1050, itemsToShow: 4 },
+        { width: 1200, itemsToShow: 5 },
+    ];
 
     const titleStyle = {
         position: 'relative',
@@ -43,7 +46,7 @@ function ManualGenerate(props) {
         props.setOutfitItems([])
     }
 
-    // TODO:
+    // submits outfit to database
     async function saveOutfit() {
         setLoading(true)
         let res = await props.submitOutfit(outfitName)
@@ -51,6 +54,7 @@ function ManualGenerate(props) {
         setLoading(false)
     }
 
+    // adds item to outfit
     function addItem(newItem) {
         let currItems = [...props.outfitItems]
         currItems.push(newItem)
@@ -58,6 +62,7 @@ function ManualGenerate(props) {
         props.setAddItem(false)
     }
 
+    // sets selected item
     function selectItem(item) {
         if (item === selectedItem) {
             setSelectedItem(null)
@@ -66,6 +71,7 @@ function ManualGenerate(props) {
         }
     }
 
+    // removes selected item from outfit
     function removeItem() {
         let currItems = [...props.outfitItems]
         let index = currItems.indexOf(selectedItem)
@@ -82,7 +88,7 @@ function ManualGenerate(props) {
                     height="fit-content"
                     width="60%"
                     left="20%"
-                    top="10%"
+                    top="25%"
                     backgroundColor="#FFFFFF"
                     borderRadius="10px"
                     boxShadow={'10px 10px 40px 0px #22223b'}
@@ -119,9 +125,9 @@ function ManualGenerate(props) {
                         textAlign="center"
                     >
                         <TextField
-                        placeholder="Enter a name for your outfit"
-                        value={outfitName === '' ? null : outfitName}
-                        onChange={(e) => setOutfitName(e.nativeEvent.target.value)}
+                            placeholder="Enter a name for your outfit"
+                            value={outfitName === '' ? null : outfitName}
+                            onChange={(e) => setOutfitName(e.nativeEvent.target.value)}
                         />
                     </View>
                     <View
@@ -134,18 +140,18 @@ function ManualGenerate(props) {
                         {
                             selectedItem === null ? (
                                 <Button
-                                onClick={() => props.setAddItem(true)}
-                                id="add-button"
-                            >
-                                <IoAdd />
-                            </Button>
+                                    onClick={() => props.setAddItem(true)}
+                                    id="add-button"
+                                >
+                                    <IoAdd />
+                                </Button>
                             ) : (
                                 <Button
-                                onClick={() => removeItem()}
-                                id="cancel-button"
-                            >
-                                <RiSubtractFill />
-                            </Button>
+                                    onClick={() => removeItem()}
+                                    id="cancel-button"
+                                >
+                                    <RiSubtractFill />
+                                </Button>
                             )
                         }
                     </View>

@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { Button, ScrollView, View, TextField, Flex, Image, SelectField } from '@aws-amplify/ui-react'
 import BarLoader from 'react-spinners/BarLoader';
 import { ImCancelCircle } from 'react-icons/im';
-import { AiOutlineEdit, AiFillEdit } from 'react-icons/ai';
 import '../css/Shared.css'
 
 
 function ItemView(props) {
 
-    let bucket = require('../env.json')
-
+    // component state objects
     const [del, setDel] = useState(false)
     const [result, setResult] = useState({})
     const [loading, setLoading] = useState(false)
@@ -22,6 +20,10 @@ function ItemView(props) {
         "description": false
     })
 
+    // add 'env' file
+    let bucket = require('../env.json')
+
+    // Rmoves item from database
     async function deleteItem() {
         if (del) {
             setLoading(true)
@@ -43,6 +45,7 @@ function ItemView(props) {
         }
     }
 
+    // updates item state
     async function updateValue(type, value) {
         let item
         if (props.item[type] === null) {
@@ -63,12 +66,14 @@ function ItemView(props) {
         props.setImageFile(null)
     }
 
+    // submits item changes to database
     async function update(id) {
         setLoading(true)
         let res = await props.updateItem(id)
         setResult(res)
         setLoading(false)
     }
+
 
     function exitWindow() {
         props.setImageFile(null)
@@ -83,6 +88,7 @@ function ItemView(props) {
         })
         props.setItemView(null)
     }
+
 
     return (
         <ScrollView
@@ -140,46 +146,15 @@ function ItemView(props) {
                         height={'20vw'}
                     />
                 </View>
-
-                {/* <View
-                    position="relative"
-                    marginBottom="1rem"
-                    marginTop="1rem"
-                >
-                    <FileUploader types={fileTypes} multiple={false} handleChange={handleFile} />
-                </View> */}
-
                 <TextField
                     label="Item Name"
                     value={itemEdit["name"] === false ? props.clothingItem.name : null}
                     placeholder={itemEdit["name"] === true ? props.clothingItem.name : null}
-                    innerEndComponent={
-                        <Button
-                            onClick={() => {
-                                setItemEdit({
-                                    "name": !itemEdit["name"],
-                                    "type": itemEdit.type,
-                                    "color": itemEdit.color,
-                                    "weather": itemEdit.weather,
-                                    "occasion": itemEdit.occasion,
-                                    "description": itemEdit.description
-                                })
-                            }}
-                        >
-                            {itemEdit.name === false ? (
-                                <AiOutlineEdit size={'1.5rem'} />
-                            ) : (
-                                <AiFillEdit size={'1.5rem'} />
-                            )}
-                        </Button>
-                    }
                     onChange={(e) => updateValue("name", e.nativeEvent.target.value)} />
-                    
-
                 <SelectField
                     label="Type"
                     onChange={(e) => updateValue("type", e.nativeEvent.target.value)}
-                    value = {props.clothingItem.type}
+                    value={props.clothingItem.type}
                 >
                     <option value="Shoes">Shoes</option>
                     <option value="Bottoms">Bottoms</option>
@@ -191,41 +166,21 @@ function ItemView(props) {
                     label="Color"
                     value={itemEdit["color"] === false ? props.clothingItem.color : null}
                     placeholder={itemEdit["color"] === true ? props.clothingItem.color : null}
-                    innerEndComponent={
-                            <Button>
-                                    <AiOutlineEdit size={'1.5rem'} />
-                            </Button>
-                    }
                     onChange={(e) => updateValue("color", e.nativeEvent.target.value)} />
                 <TextField
                     label="Weather"
                     value={itemEdit["weather"] === false ? props.clothingItem.weather : null}
                     placeholder={itemEdit["weather"] === true ? props.clothingItem.weather : null}
-                    innerEndComponent={
-                        <Button>
-                                <AiOutlineEdit size={'1.5rem'} />
-                        </Button>
-                }
                     onChange={(e) => updateValue("weather", e.nativeEvent.target.value)} />
                 <TextField
                     label="Occasion"
                     value={itemEdit["occasion"] === false ? props.clothingItem.occasion : null}
                     placeholder={itemEdit["occasion"] === true ? props.clothingItem.occasion : null}
-                    innerEndComponent={
-                        <Button>
-                                <AiOutlineEdit size={'1.5rem'} />
-                        </Button>
-                }
                     onChange={(e) => updateValue("occasion", e.nativeEvent.target.value)} />
                 <TextField
                     label="Description"
                     value={itemEdit["description"] === false ? props.clothingItem.description : null}
                     placeholder={itemEdit["description"] === true ? props.clothingItem.description : null}
-                    innerEndComponent={
-                        <Button>
-                                <AiOutlineEdit size={'1.5rem'} />
-                        </Button>
-                }
                     onChange={(e) => updateValue("description", e.nativeEvent.target.value)} />
                 <View height="1rem"></View>
             </Flex>
@@ -241,16 +196,16 @@ function ItemView(props) {
                 {
                     result.success !== undefined ? (
                         <h3
-                        className='success'
+                            className='success'
                         >
                             {result.success}
                         </h3>
                     ) : (
                         result.error !== undefined ? (
                             <h3
-                            className='error'
+                                className='error'
                             >
-                               Error: {result.error}
+                                Error: {result.error}
                             </h3>
                         ) : (
                             null

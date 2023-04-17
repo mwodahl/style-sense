@@ -6,6 +6,8 @@ import '../../css/Shared.css'
 
 function OutfitDecision(props) {
 
+    // component to handle user decision to generate outfit
+
     function handleClick(val) {
         props.setGenerateOutfit(val)
     }
@@ -47,7 +49,7 @@ function OutfitDecision(props) {
                 <h3
                     className='header'
                 >
-                    Generate Outfit?
+                    Manually Add Outfit?
                 </h3>
             </View>
             <Flex
@@ -61,13 +63,13 @@ function OutfitDecision(props) {
             >
                 <Button
                     id="cancel-button"
-                    onClick={() => handleClick(true)}
+                    onClick={() => handleClick(false)}
                 >
                     No
                 </Button>
                 <Button
                     id="add-button"
-                    onClick={() => handleClick(false)}
+                    onClick={() => handleClick(true)}
                 >
                     Yes
                 </Button>
